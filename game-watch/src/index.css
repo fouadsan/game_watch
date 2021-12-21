@@ -39,8 +39,8 @@ Variables
   --transition: all 250ms linear;
   --spacing: 0.1rem;
   --radius: 0.25rem;
-  --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  --light-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+  --dark-shadow: 0 5px 15px rgba(255, 255, 255, 0.7);
   --max-width: 1170px;
   --fixed-width: 620px;
 }
@@ -105,7 +105,7 @@ h5 {
 }
 p {
   margin-bottom: 1.25rem;
-  color: var(--clr-accent-3);
+  color: var(--clr-white);
   text-transform: capitalize;
 }
 @media screen and (min-width: 800px) {
