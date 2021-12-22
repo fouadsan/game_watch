@@ -5,7 +5,7 @@ admin.site.register(Genre)
 
 
 class GameAdmin(admin.ModelAdmin):
-    list_display = ('genre', 'id', 'name', 'image_tag', 'release_date',
+    list_display = ('name', 'id', 'genre', 'poster_tag', 'release_date',
                     'rating', 'developer', 'publisher')
 
 
