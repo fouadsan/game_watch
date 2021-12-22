@@ -1,20 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-
 function BannerText() {
   return (
     <Wrapper>
       <div className="header">
-        <div className="logo">
-          <h4>logo</h4>
-        </div>
         <div className="title">
-          <h2>fouad benayad</h2>
+          <h2>game watch</h2>
         </div>
       </div>
       <div className="description">
         <p>
-          Games Tracker is an app where you keep track of all the games you are
+          Game Watch is an app where you keep track of all the games you are
           interested in by tracking them, you can mark your playing status on
           tracked games. It allows you to check upcoming, most popular games
           easily filtered by the platforms of your choice, it recommends you
@@ -22,9 +18,9 @@ function BannerText() {
           notified about the newly released games from your tracked collection
           or selected platforms. Whats different?: you can track a series of
           games, see your playing progress on it and get info / notifications on
-          upcoming or newly released games in that series. Contact:
-          support@gamestracking.com
+          upcoming or newly released games in that series.
         </p>
+        <p>Contact: f.benayad95@gmail.com</p>
       </div>
     </Wrapper>
   );
@@ -35,10 +31,12 @@ const Wrapper = styled.article`
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
 
   .header {
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
   }
 
   .description {

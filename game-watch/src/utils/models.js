@@ -1,8 +1,7 @@
 class Image {
-  constructor(id, src, alt) {
+  constructor(id, src) {
     this.id = id;
     this.src = src;
-    this.alt = alt;
   }
 }
 

@@ -1,46 +1,41 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+
+import { IMAGES } from "../utils/constants";
 
 function Background() {
-  const images = useSelector((state) => state.images);
-
   return (
     <Wrapper>
       <ul>
-        {images &&
-          images.map((image) => {
-            const { id, src, alt } = image;
+        {IMAGES &&
+          IMAGES.map((image) => {
+            const { id, src } = image;
             return (
               <li key={id}>
-                <img src={src} alt="alt" />
+                <img src={src} alt="game poster" />
               </li>
             );
           })}
       </ul>
-
-      <ul></ul>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
-  height: 100vh;
   background-color: var(--clr-black);
   position: fixed;
-  // overflow: hidden;
-
+  width: 100%;
+  height: 100%;
   z-index: -1;
 
   ul {
-    zoom: 1;
+    display: grid;
+    grid-template-columns: repeat(21, 1fr);
   }
 
   li {
     width: 90px;
     height: 120px;
-
-    display: inline-block;
   }
 
   img {

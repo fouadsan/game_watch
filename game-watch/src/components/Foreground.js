@@ -7,7 +7,7 @@ import StoreButtons from "./StoreButtons";
 
 function Foreground() {
   return (
-    <Wrapper>
+    <Wrapper className="page-100">
       <div className="section section-center">
         <div className="row">
           <TextContainer />
@@ -20,13 +20,10 @@ function Foreground() {
 }
 
 const Wrapper = styled.section`
-  min-height: 100vh;
   display: grid;
   place-items: center;
-
-  overflow: hidden;
   color: white;
-  background-color: rgba(0, 0, 0, 0.65);
+  background: var(--clr-black-opacity);
 
   .row {
     height: 100%;
@@ -34,7 +31,7 @@ const Wrapper = styled.section`
     justify-content: space-between;
   }
 
-  @media (max-width: 667px) {
+  @media (max-width: 1190px) {
     .img-container {
       display: none;
     }
