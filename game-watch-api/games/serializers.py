@@ -1,5 +1,11 @@
 from rest_framework import serializers
-from .models import Game, GameDetail
+from .models import Game, GameDetail, WebPoster
+
+
+class WebPosterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WebPoster
+        fields = ('id', 'web_image')
 
 
 class GameSerializer(serializers.ModelSerializer):

@@ -1,8 +1,7 @@
-from django.db.models import query
-from rest_framework import generics, serializers
+from rest_framework import generics
 
-from .models import Game, GameDetail
-from .serializers import GameSerializer, GameDetailSerializer
+from .models import Game, GameDetail, WebPoster
+from .serializers import GameSerializer, GameDetailSerializer, WebPosterSerializer
 
 
 class GameList(generics.ListAPIView):
@@ -13,3 +12,13 @@ class GameList(generics.ListAPIView):
 class GameDetail(generics.RetrieveAPIView):
     queryset = GameDetail.objects.all()
     serializer_class = GameDetailSerializer
+
+
+class WebPosterList(generics.ListAPIView):
+    queryset = WebPoster.objects.all()
+    serializer_class = WebPosterSerializer
+
+
+
+
+
