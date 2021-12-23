@@ -3,7 +3,7 @@ from django.utils.html import mark_safe
 
 
 class WebPoster(models.Model):
-    web_image = models.ImageField(upload_to='web_posters')
+    web_image = models.ImageField(upload_to='web_posters/')
 
 class Genre(models.Model):
     name = models.CharField(max_length=100)
