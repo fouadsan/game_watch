@@ -8,8 +8,8 @@ import StoreButtons from "./StoreButtons";
 function Foreground() {
   return (
     <Wrapper className="page-100">
-      <div className="section section-center">
-        <div className="row">
+      <div className="section-center">
+        <div className="container">
           <TextContainer />
           <ImageContainer />
         </div>
@@ -19,13 +19,18 @@ function Foreground() {
   );
 }
 
-const Wrapper = styled.section`
+const Wrapper = styled.div`
   display: grid;
   place-items: center;
   color: white;
   background: var(--clr-black-opacity);
 
-  .row {
+  .section-center {
+    height: 100%;
+    width: 100%;
+  }
+
+  .container {
     height: 100%;
     display: flex;
     justify-content: space-between;

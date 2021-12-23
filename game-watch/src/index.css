@@ -6,9 +6,10 @@ Variables
 
 :root {
   --clr-white: #fff;
-  --clr-red-dark: hsl(360, 67%, 44%);
   --clr-black: #222;
+  --clr-red-dark: hsl(360, 67%, 44%);
   --clr-black-opacity: rgba(0, 0, 0, 0.65);
+  --clr-white-opacity: rgba(255, 255, 255, 0.65);
   --transition: all 250ms linear;
   --spacing: 0.1rem;
   --radius: 0.25rem;
@@ -123,7 +124,7 @@ p {
   }
 }
 
-@keyframes roll {
+@keyframes bounce {
   50% {
     transform: translateY(50px);
   }
@@ -140,4 +141,25 @@ p {
 .page-100 {
   min-height: calc(100vh - 5rem);
   padding: 5rem 0;
+}
+
+.btn {
+  text-transform: uppercase;
+  background: var(--clr-black);
+  color: var(--clr-white);
+  padding: 0.375rem 0.75rem;
+  letter-spacing: var(--spacing);
+  display: inline-block;
+  font-family: inherit;
+  font-weight: 400;
+  transition: var(--transition);
+  font-size: 0.875rem;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius);
+  border-color: transparent;
+}
+.btn:hover {
+  color: var(--clr-black);
+  background: var(--clr-white);
 }
