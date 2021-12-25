@@ -1,27 +1,28 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { colors } from "../utils/constants";
+import { ScrollView, View, StyleSheet } from "react-native";
+
+import { GameList } from "../components";
+import { colors, GENRES } from "../utils/constants";
 
 function HomeScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Home screen</Text>
+    <View style={styles.screen}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {GENRES.map((gen) => {
+          const { id, name } = gen;
+          return <GameList key={id} id={id} name={name} />;
+        })}
+      </ScrollView>
+      <StatusBar style="auto" />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: colors.background,
-  },
-
-  title: {
-    color: colors.text,
   },
 });
 

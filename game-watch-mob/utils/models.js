@@ -6,12 +6,12 @@ class Genre {
 }
 
 class Game {
-  constructor(id, genreId, name, poster, is_cracked) {
+  constructor(id, genreId, name, poster, isCracked) {
     this.id = id;
     this.genreId = genreId;
     this.name = name;
     this.poster = poster;
-    this.is_cracked = is_cracked;
+    this.isCracked = isCracked;
   }
 }
 
