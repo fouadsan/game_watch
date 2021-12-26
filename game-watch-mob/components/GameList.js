@@ -26,6 +26,7 @@ const GameList = ({ id, name }) => {
           renderItem={(itemData) => (
             <Game
               name={itemData.item.name}
+              genreId={itemData.item.genreId}
               poster={itemData.item.poster}
               isCracked={itemData.item.isCracked}
             />

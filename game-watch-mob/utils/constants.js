@@ -17,7 +17,7 @@ const GENRES = [
 ];
 
 const GAMES = [
-  new Game(1, 1, "resident evil", require("../assets/images/image1.jpg"), true),
+  new Game(1, 1, "resident evil", "../assets/images/image1.jpg", true),
   new Game(
     2,
     2,
@@ -25,8 +25,8 @@ const GAMES = [
     require("../assets/images/image2.jpg"),
     false
   ),
-  new Game(3, 1, "silent hill", require("../assets/images/image3.jpg"), false),
-  new Game(4, 4, "gears of war", require("../assets/images/image4.jpg"), true),
+  new Game(3, 1, "silent hill", "../assets/images/image3.jpg", false),
+  new Game(4, 4, "gears of war", "../assets/images/image4.jpg", true),
 ];
 
 export { colors, GENRES, GAMES };

@@ -12,6 +12,11 @@ const defaultTabOptions = ({ route }) => ({
     backgroundColor: colors.background,
     borderTopColor: colors.blackOpacity,
   },
+
+  tabBarLabelStyle: {
+    fontFamily: "open-sans",
+  },
+
   tabBarIcon: ({ color, size }) => {
     let iconName;
 
