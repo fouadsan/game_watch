@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { ScrollView, View, StyleSheet } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 
 import { GameList } from "../components";
 import { colors, GENRES } from "../utils/constants";

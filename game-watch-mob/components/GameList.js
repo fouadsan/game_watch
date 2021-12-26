@@ -1,19 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { View, Dimensions, Text, FlatList, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Game from "./Game";
 import { colors } from "../utils/constants";
+import * as gamesActions from "../store/actions/games";
 
 const GameList = ({ id, name }) => {
-  const games = useSelector((state) => state.games.games);
   const [gameList, setGameList] = useState([]);
 
+  const dispatch = useDispatch();
+
+  const loadGames = useCallback(async () => {
+    try {
+      await dispatch(gamesActions.fetchGames());
+    } catch (error) {
+      console.log(error);
+    }
+  }, [dispatch]);
+
   useEffect(() => {
-    setGameList((currentState) => {
-      return games.filter((game) => game.genreId === id);
-    });
-  }, []);
+    loadGames();
+    return () => {};
+  }, [loadGames]);
 
   return (
     <View style={styles.container}>
