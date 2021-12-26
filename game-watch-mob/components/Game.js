@@ -15,8 +15,29 @@ const Game = ({ name, poster, isCracked }) => {
       </View>
       <View>
         <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
-          prince of persia warrior within
+          {name}
         </Text>
+        <View>
+          {isCracked ? (
+            <Text
+              style={{
+                ...styles.text,
+                color: "green",
+              }}
+            >
+              cracked
+            </Text>
+          ) : (
+            <Text
+              style={{
+                ...styles.text,
+                color: colors.primary,
+              }}
+            >
+              uncracked
+            </Text>
+          )}
+        </View>
       </View>
     </View>
   );
@@ -41,10 +62,18 @@ const styles = StyleSheet.create({
 
   title: {
     fontFamily: "open-sans",
-    fontSize: 12,
+    fontSize: 14,
     marginVertical: 2,
     color: colors.text,
     textAlign: "center",
+  },
+
+  text: {
+    textAlign: "right",
+    marginRight: 5,
+    fontFamily: "open-sans",
+    fontSize: 12,
+    fontWeight: "700",
   },
 });
 

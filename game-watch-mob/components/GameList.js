@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { View, Dimensions, Text, FlatList, StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
 
 import Game from "./Game";
-import { colors, GAMES } from "../utils/constants";
+import { colors } from "../utils/constants";
 
 const GameList = ({ id, name }) => {
-  const [games, setGames] = useState([]);
+  const games = useSelector((state) => state.games.games);
+  const [gameList, setGameList] = useState([]);
 
   useEffect(() => {
-    setGames((currentState) => {
-      return GAMES.filter((game) => game.genreId === id);
+    setGameList((currentState) => {
+      return games.filter((game) => game.genreId === id);
     });
   }, []);
 
@@ -22,7 +24,7 @@ const GameList = ({ id, name }) => {
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={games}
+          data={gameList}
           renderItem={(itemData) => (
             <Game
               name={itemData.item.name}

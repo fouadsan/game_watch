@@ -1,9 +1,18 @@
 import "react-native-gesture-handler";
 import React, { useState } from "react";
+import { createStore, combineReducers } from "redux";
+import { Provider } from "react-redux";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 
+import { gamesReducer } from "./store/reducers/games";
 import AppNavigator from "./navigation/AppNavigator";
+
+const rootReducer = combineReducers({
+  games: gamesReducer,
+});
+
+const store = createStore(rootReducer);
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -25,5 +34,9 @@ export default function App() {
     );
   }
 
-  return <AppNavigator />;
+  return (
+    <Provider store={store}>
+      <AppNavigator />
+    </Provider>
+  );
 }

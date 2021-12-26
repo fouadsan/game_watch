@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Genre, Game, GameDetail, WebPoster
+from .models import Genre, Game, GameDetail
 
 admin.site.register(Genre)
 
@@ -17,5 +17,3 @@ class GameDetailAdmin(admin.ModelAdmin):
 
 
 admin.site.register(GameDetail, GameDetailAdmin)
-
-admin.site.register(WebPoster)
