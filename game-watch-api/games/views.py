@@ -14,12 +14,5 @@ class GameDetail(generics.RetrieveAPIView):
     serializer_class = GameDetailSerializer
 
 
-class WebPosterList(generics.ListAPIView):
-    queryset = WebPoster.objects.all()
-    serializer_class = WebPosterSerializer
-    lookup_url_kwarg = "web_posters"
-
-
-
 
 
