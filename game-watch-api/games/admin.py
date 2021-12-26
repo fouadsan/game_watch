@@ -1,8 +1,7 @@
 from django.contrib import admin
-from .models import Genre, Game, GameDetail, WebPoster
+from .models import Genre, Game, GameDetail
 
 admin.site.register(Genre)
-
 
 class GameAdmin(admin.ModelAdmin):
     list_display = ('name', 'id', 'genre', 'poster_tag')
@@ -18,4 +17,3 @@ class GameDetailAdmin(admin.ModelAdmin):
 
 admin.site.register(GameDetail, GameDetailAdmin)
 
-admin.site.register(WebPoster)

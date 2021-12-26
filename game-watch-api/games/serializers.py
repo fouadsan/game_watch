@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Game, GameDetail, WebPoster
+from .models import Game, GameDetail
 
 
 class GameSerializer(serializers.ModelSerializer):
@@ -14,9 +14,3 @@ class GameDetailSerializer(serializers.ModelSerializer):
         fields = (
             'game', 'image', 'description', 'release_date', 'rating', 'developer', 'publisher'
         )
-
-
-class WebPosterSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = WebPoster
-        fields = ('id', 'web_image')
