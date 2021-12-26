@@ -3,7 +3,6 @@ from .models import Genre, Game, GameDetail
 
 admin.site.register(Genre)
 
-
 class GameAdmin(admin.ModelAdmin):
     list_display = ('name', 'id', 'genre', 'poster_tag')
 
