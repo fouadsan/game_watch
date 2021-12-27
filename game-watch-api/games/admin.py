@@ -16,4 +16,3 @@ class GameDetailAdmin(admin.ModelAdmin):
 
 
 admin.site.register(GameDetail, GameDetailAdmin)
-

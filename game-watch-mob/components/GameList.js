@@ -1,17 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { View, Dimensions, Text, FlatList, StyleSheet } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 
 import Game from "./Game";
-import { colors, GAMES } from "../utils/constants";
+import { colors } from "../utils/constants";
+import * as gamesActions from "../store/actions/games";
 
 const GameList = ({ id, name }) => {
-  const [games, setGames] = useState([]);
+  const [gameList, setGameList] = useState([]);
+
+  const dispatch = useDispatch();
+
+  const loadGames = useCallback(async () => {
+    try {
+      await dispatch(gamesActions.fetchGames());
+    } catch (error) {
+      console.log(error);
+    }
+  }, [dispatch]);
 
   useEffect(() => {
-    setGames((currentState) => {
-      return GAMES.filter((game) => game.genreId === id);
-    });
-  }, []);
+    loadGames();
+    return () => {};
+  }, [loadGames]);
 
   return (
     <View style={styles.container}>
@@ -22,7 +33,7 @@ const GameList = ({ id, name }) => {
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={games}
+          data={gameList}
           renderItem={(itemData) => (
             <Game
               name={itemData.item.name}
