@@ -3,12 +3,17 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework import permissions
 
-from .models import Game, GameDetail
-from .serializers import GameSerializer, GameDetailSerializer
+from .models import Genre, Game, GameDetail
+from .serializers import GenreSerializer, GameSerializer, GameDetailSerializer
+
+
+class GenreList(generics.ListAPIView):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
 
 
 class GameList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
     queryset = Game.objects.all()
     serializer_class = GameSerializer
     filterset_fields = ['genre', 'is_cracked']
@@ -25,9 +30,3 @@ class GameDetail(generics.RetrieveAPIView):
     queryset = GameDetail.objects.all()
     serializer_class = GameDetailSerializer
     lookup_field = "slug"
-    
-    
-
-
-
-

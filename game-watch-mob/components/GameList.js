@@ -8,21 +8,23 @@ import * as gamesActions from "../store/actions/games";
 
 const GameList = ({ id, name }) => {
   const [gameList, setGameList] = useState([]);
-
+  const games = useSelector((state) => state.games.games);
   const dispatch = useDispatch();
 
-  const loadGames = useCallback(async () => {
-    try {
-      await dispatch(gamesActions.fetchGames());
-    } catch (error) {
-      console.log(error);
-    }
-  }, [dispatch]);
+  // const loadGames = useCallback(async () => {
+  //   try {
+  //     await dispatch(gamesActions.fetchGames());
+  //     setGameList((currentState) => {
+  //       return games.filter((game) => game.genre === id);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, [dispatch]);
 
-  useEffect(() => {
-    loadGames();
-    return () => {};
-  }, [loadGames]);
+  // useEffect(() => {
+  //   loadGames();
+  // }, [loadGames]);
 
   return (
     <View style={styles.container}>

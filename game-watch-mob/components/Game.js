@@ -8,7 +8,7 @@ const Game = ({ name, poster, isCracked }) => {
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
-          source={require("../assets/images/image1.jpg")}
+          source={{ uri: poster }}
           style={styles.image}
           resizeMode="stretch"
         />

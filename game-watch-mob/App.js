@@ -6,10 +6,12 @@ import ReduxThunk from "redux-thunk";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 
+import { genresReducer } from "./store/reducers/genres";
 import { gamesReducer } from "./store/reducers/games";
 import AppNavigator from "./navigation/AppNavigator";
 
 const rootReducer = combineReducers({
+  genres: genresReducer,
   games: gamesReducer,
 });
 
