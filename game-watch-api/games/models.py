@@ -30,7 +30,8 @@ class Game(models.Model):
 
 
 class GameDetail(models.Model):
-    game_id = models.ForeignKey(Game, on_delete=models.CASCADE)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=250)
     image = models.ImageField(
         upload_to="games/images/", default='games/images/default.jpg'
     )
@@ -42,6 +43,9 @@ class GameDetail(models.Model):
 
     def image_tag(self):
         return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
+
+    def __str__(self):
+        return f"{self.game}"
 
     class Meta:
         verbose_name_plural = 'Games Detail'

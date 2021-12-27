@@ -4,14 +4,14 @@ from .models import Genre, Game, GameDetail
 admin.site.register(Genre)
 
 class GameAdmin(admin.ModelAdmin):
-    list_display = ('name', 'id', 'genre', 'poster_tag')
+    list_display = ('name', 'id', 'genre', 'poster_tag', 'is_cracked')
 
 
 admin.site.register(Game, GameAdmin)
 
 
 class GameDetailAdmin(admin.ModelAdmin):
-    list_display = ('game_id', 'image_tag', 'description', 'release_date',
+    list_display = ('game', 'image_tag', 'description', 'release_date',
                     'rating', 'developer', 'publisher')
 
 
