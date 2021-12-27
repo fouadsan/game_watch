@@ -1,7 +1,7 @@
 from rest_framework import generics
 
-from .models import Game, GameDetail, WebPoster
-from .serializers import GameSerializer, GameDetailSerializer, WebPosterSerializer
+from .models import Game, GameDetail
+from .serializers import GameSerializer, GameDetailSerializer
 
 
 class GameList(generics.ListAPIView):
@@ -12,6 +12,7 @@ class GameList(generics.ListAPIView):
 class GameDetail(generics.RetrieveAPIView):
     queryset = GameDetail.objects.all()
     serializer_class = GameDetailSerializer
+
 
 
 
