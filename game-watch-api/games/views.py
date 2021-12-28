@@ -1,4 +1,5 @@
 from rest_framework import generics
+from rest_framework import pagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework import permissions
@@ -13,10 +14,13 @@ class GenreList(generics.ListAPIView):
 
 
 class GameList(generics.ListAPIView):
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Game.objects.all()
     serializer_class = GameSerializer
-    filterset_fields = ['genre', 'is_cracked']
+    pagination_class = pagination.LimitOffsetPagination
+    # https://api.example.org/accounts/?limit=100&offset=400
+    page_size = 1
+    filterset_fields = ['genre', 'platform', 'is_cracked']
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     search_fields = ['^name']
 

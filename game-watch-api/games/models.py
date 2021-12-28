@@ -3,13 +3,26 @@ from django.utils.html import mark_safe
 
 
 class Genre(models.Model):
-    name = models.CharField(max_length=100)
+    options = (
+        ('horror', 'Horror'),
+        ('shooter', 'Shooter'),
+        ('adventure', 'Adventure'),
+        ('sci-fi', 'Sci-fi'),
+    )
+
+    name = models.CharField(max_length=100, choices=options, default='horror')
 
     def __str__(self):
         return self.name
 
 
 class Game(models.Model):
+    options = (
+        ('pc', 'PC'),
+        ('playstation', 'Playstation'),
+        ('xbox', 'Xbox'),
+    )
+
     genre = models.ForeignKey(
         Genre, on_delete=models.PROTECT, default=1
     )
@@ -17,6 +30,10 @@ class Game(models.Model):
     poster = models.ImageField(
         upload_to="games/posters/", default='games/posters/default.jpg'
     )
+    platform = models.CharField(
+        max_length=15, choices=options, default='pc'
+    )
+    release_date = models.DateField(blank=True)
     is_cracked = models.BooleanField(default=False)
 
     def poster_tag(self):
@@ -36,7 +53,6 @@ class GameDetail(models.Model):
         upload_to="games/images/", default='games/images/default.jpg'
     )
     description = models.TextField(blank=True)
-    release_date = models.DateField(blank=True)
     rating = models.DecimalField(max_digits=3, decimal_places=1, blank=True)
     developer = models.CharField(max_length=150, blank=True)
     publisher = models.CharField(max_length=150, blank=True)
