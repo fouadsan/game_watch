@@ -13,7 +13,7 @@ export const fetchGenres = () => {
         type: SET_GENRES_LOADING,
       });
       const response = await fetch(
-        "https://ced8-105-103-180-33.ngrok.io/api/games/genres/"
+        "https://8024-105-103-48-219.ngrok.io/api/games/genres/"
       );
 
       if (!response.ok) {

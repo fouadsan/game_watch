@@ -13,7 +13,7 @@ export const fetchGames = () => {
         type: SET_GAMES_LOADING,
       });
       const response = await fetch(
-        "https://ced8-105-103-180-33.ngrok.io/api/games/"
+        "https://8024-105-103-48-219.ngrok.io/api/games/"
       );
 
       if (!response.ok) {
@@ -25,17 +25,19 @@ export const fetchGames = () => {
       }
 
       const data = await response.json();
-
+      console.log(data);
       const loadedGames = [];
 
       for (const key in data.results) {
         loadedGames.push(
           new Game(
-            data.results[key].genre,
             key,
-            data.results[key].is_cracked,
             data.results[key].name,
-            data.results[key].poster
+            data.results[key].genre,
+            data.results[key].poster,
+            data.results[key].platform,
+            data.results[key].release_date,
+            data.results[key].is_cracked
           )
         );
       }

@@ -10,7 +10,8 @@ class Genre(models.Model):
         ('sci-fi', 'Sci-fi'),
     )
 
-    name = models.CharField(max_length=100, choices=options, default='horror')
+    name = models.CharField(max_length=100, choices=options,
+                            unique=True, default='horror')
 
     def __str__(self):
         return self.name
@@ -23,19 +24,14 @@ class Platform(models.Model):
         ('xbox', 'Xbox'),
     )
 
-    name = models.CharField(max_length=15, choices=options, unique=True, default='pc')
+    name = models.CharField(
+        max_length=15, choices=options, unique=True, default='pc')
 
     def __str__(self):
         return self.name
 
 
 class Game(models.Model):
-    options = (
-        ('pc', 'PC'),
-        ('playstation', 'Playstation'),
-        ('xbox', 'Xbox'),
-    )
-
     genre = models.ForeignKey(
         Genre, on_delete=models.PROTECT, default=1
     )

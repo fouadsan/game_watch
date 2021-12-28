@@ -13,14 +13,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { GameList } from "../components";
 import { colors } from "../utils/constants";
 import * as genresActions from "../store/actions/genres";
+import * as gamesActions from "../store/actions/games";
 
-function HomeScreen() {
+function HomeScreen(props) {
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const {
-    genres_loading: loading,
-    genres_error: error,
-    genres,
-  } = useSelector((state) => state.genres);
+  const { genres_loading, genres_error, genres } = useSelector(
+    (state) => state.genres
+  );
+
+  const { games_loading, games_error, games } = useSelector(
+    (state) => state.games
+  );
   const dispatch = useDispatch();
 
   const loadGenres = useCallback(async () => {
@@ -29,11 +32,23 @@ function HomeScreen() {
     setIsRefreshing(false);
   }, [dispatch]);
 
-  useEffect(() => {
-    loadGenres();
-  }, [loadGenres]);
+  const loadGames = useCallback(async () => {
+    await dispatch(gamesActions.fetchGames());
+    setGameList((currentState) => {
+      return games.filter((game) => game.genre === id);
+    });
+  }, [dispatch]);
 
-  if (loading) {
+  useEffect(() => {
+    const unsubscribeGenres = props.navigation.addListener("focus", loadGenres);
+    const unsubscribeGames = props.navigation.addListener("focus", loadGames);
+    return () => {
+      unsubscribeGenres();
+      unsubscribeGames();
+    };
+  }, [loadGenres, loadGames]);
+
+  if (genres_loading || games_loading) {
     return (
       <View style={styles.centered}>
         <ActivityIndicator size="large" color={colors.primary} />
@@ -42,10 +57,10 @@ function HomeScreen() {
     );
   }
 
-  if (error.is_occured) {
+  if (genres_error.is_occured || games_error.is_occured) {
     return (
       <View style={styles.centered}>
-        <Text style={styles.text}>{error.msg}</Text>
+        <Text style={styles.text}>{genres_error.msg}</Text>
         <Button title="Try again" onPress={loadGenres} color={colors.primary} />
         <StatusBar style="auto" />
       </View>
@@ -60,7 +75,11 @@ function HomeScreen() {
         showsVerticalScrollIndicator={false}
         data={genres}
         renderItem={(itemData) => (
-          <GameList id={itemData.item.id} name={itemData.item.name} />
+          <GameList
+            id={itemData.item.id}
+            name={itemData.item.name}
+            games={games}
+          />
         )}
       />
       <StatusBar style="auto" />
@@ -82,10 +101,11 @@ const styles = StyleSheet.create({
   },
 
   text: {
+    marginBottom: 10,
     fontFamily: "open-sans",
     fontSize: 18,
     color: colors.text,
-    marginBottom: 10,
+    textTransform: "capitalize",
   },
 });
 

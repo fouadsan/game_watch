@@ -14,7 +14,7 @@ class GenreList(generics.ListAPIView):
 
 
 class GameList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
     queryset = Game.objects.all()
     serializer_class = GameSerializer
     pagination_class = pagination.LimitOffsetPagination
