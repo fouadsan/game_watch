@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # our own apps
     'games',
+    'users',
     # third party apps
     'rest_framework',
     'django_filters',
@@ -148,7 +149,10 @@ REST_FRAMEWORK = {
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-IMPLE_JWT = {
+# Custom user models
+AUTH_USER_MODEL = "users.Account"
+
+SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': True,

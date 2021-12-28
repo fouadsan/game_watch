@@ -1,10 +1,12 @@
 from django.contrib import admin
-from .models import Genre, Game, GameDetail
+from .models import Genre, Platform, Game, GameDetail
 
 admin.site.register(Genre)
 
+admin.site.register(Platform)
+
 class GameAdmin(admin.ModelAdmin):
-    list_display = ('name', 'id', 'genre', 'poster_tag', 'platform', 'release_date', 'is_cracked')
+    list_display = ('name', 'id', 'genre', 'poster_tag', 'release_date', 'is_cracked')
 
 
 admin.site.register(Game, GameAdmin)

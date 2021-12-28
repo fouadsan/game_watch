@@ -16,6 +16,19 @@ class Genre(models.Model):
         return self.name
 
 
+class Platform(models.Model):
+    options = (
+        ('pc', 'PC'),
+        ('playstation', 'Playstation'),
+        ('xbox', 'Xbox'),
+    )
+
+    name = models.CharField(max_length=15, choices=options, unique=True, default='pc')
+
+    def __str__(self):
+        return self.name
+
+
 class Game(models.Model):
     options = (
         ('pc', 'PC'),
@@ -30,9 +43,7 @@ class Game(models.Model):
     poster = models.ImageField(
         upload_to="games/posters/", default='games/posters/default.jpg'
     )
-    platform = models.CharField(
-        max_length=15, choices=options, default='pc'
-    )
+    platform = models.ManyToManyField(Platform)
     release_date = models.DateField(blank=True)
     is_cracked = models.BooleanField(default=False)
 
