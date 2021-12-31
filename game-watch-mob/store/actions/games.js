@@ -1,5 +1,4 @@
-import axios from "axios";
-
+import axios from "../../utils/axios";
 import { Game } from "../../utils/models";
 
 export const SET_GAMES_LOADING = "SET_GAMES_LOADING";
@@ -12,9 +11,7 @@ export const fetchGames = () => {
       dispatch({
         type: SET_GAMES_LOADING,
       });
-      const response = await axios.get(
-        "https://c9f0-105-103-190-132.ngrok.io/api/games/"
-      );
+      const response = await axios.get("games/");
       if (response.status !== 200) {
         dispatch({
           type: SET_GAMES_ERROR,

@@ -10,6 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import BottomNavigator from "./BottomNavigator";
 import { colors } from "../utils/constants";
 import { DrawerHeader, DrawerFooter } from "../components";
+import HeaderButton from "../components/UI/HeaderButton";
 
 const defaultDrawerOptions = {
   drawerStyle: {
@@ -36,6 +37,14 @@ const defaultDrawerOptions = {
   drawerLabelStyle: {
     fontFamily: "open-sans",
   },
+
+  headerRight: () => (
+    <HeaderButton
+      iconName={Platform.OS === "android" ? "md-search" : "ios-search"}
+      iconSize={23}
+      onPress={() => {}}
+    />
+  ),
 };
 
 const DrawerNavigator = createDrawerNavigator();

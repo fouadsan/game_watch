@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../utils/axios";
 
 import { Genre } from "../../utils/models";
 
@@ -12,9 +12,7 @@ export const fetchGenres = () => {
       dispatch({
         type: SET_GENRES_LOADING,
       });
-      const response = await axios.get(
-        "https://c9f0-105-103-190-132.ngrok.io/api/games/genres/"
-      );
+      const response = await axios.get("games/genres/");
 
       if (response.status !== 200) {
         dispatch({

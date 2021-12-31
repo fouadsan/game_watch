@@ -1,24 +1,10 @@
 import React from "react";
-import {
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  Platform,
-  View,
-  Image,
-  Dimensions,
-  Text,
-  StyleSheet,
-} from "react-native";
+import { View, Image, Dimensions, Text, StyleSheet } from "react-native";
 
+import TouchableCmp from "./UI/TouchableCmp";
 import { colors } from "../utils/constants";
 
 const Game = ({ name, poster, isCracked }) => {
-  let TouchableCmp = TouchableOpacity;
-
-  if (Platform.OS === "android" && Platform.Version >= 21) {
-    TouchableCmp = TouchableNativeFeedback;
-  }
-
   return (
     <TouchableCmp onPress={() => {}}>
       <View style={styles.container}>
