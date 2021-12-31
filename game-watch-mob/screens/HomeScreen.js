@@ -17,6 +17,7 @@ import * as gamesActions from "../store/actions/games";
 
 function HomeScreen(props) {
   const [isRefreshing, setIsRefreshing] = useState(false);
+
   const { genres_loading, genres_error, genres } = useSelector(
     (state) => state.genres
   );
@@ -27,26 +28,31 @@ function HomeScreen(props) {
   const dispatch = useDispatch();
 
   const loadGenres = useCallback(async () => {
-    setIsRefreshing(true);
     await dispatch(genresActions.fetchGenres());
-    setIsRefreshing(false);
   }, [dispatch]);
 
   const loadGames = useCallback(async () => {
     await dispatch(gamesActions.fetchGames());
-    setGameList((currentState) => {
-      return games.filter((game) => game.genre === id);
-    });
   }, [dispatch]);
 
+  const loadGamesContent = async () => {
+    setIsRefreshing(true);
+    await loadGenres();
+    await loadGames();
+    setIsRefreshing(false);
+  };
+
   useEffect(() => {
-    const unsubscribeGenres = props.navigation.addListener("focus", loadGenres);
-    const unsubscribeGames = props.navigation.addListener("focus", loadGames);
+    // const unsubscribeGenres = props.navigation.addListener("focus", loadGenres);
+    const unsubscribeContent = props.navigation.addListener(
+      "focus",
+      loadGamesContent
+    );
     return () => {
-      unsubscribeGenres();
-      unsubscribeGames();
+      // unsubscribeGenres();
+      unsubscribeContent();
     };
-  }, [loadGenres, loadGames]);
+  }, [loadGamesContent]);
 
   if (genres_loading || games_loading) {
     return (
@@ -61,7 +67,11 @@ function HomeScreen(props) {
     return (
       <View style={styles.centered}>
         <Text style={styles.text}>{genres_error.msg}</Text>
-        <Button title="Try again" onPress={loadGenres} color={colors.primary} />
+        <Button
+          title="Try again"
+          onPress={loadGamesContent}
+          color={colors.primary}
+        />
         <StatusBar style="auto" />
       </View>
     );
@@ -70,7 +80,7 @@ function HomeScreen(props) {
   return (
     <View style={styles.screen}>
       <FlatList
-        onRefresh={loadGenres}
+        onRefresh={loadGamesContent}
         refreshing={isRefreshing}
         showsVerticalScrollIndicator={false}
         data={genres}
@@ -78,7 +88,7 @@ function HomeScreen(props) {
           <GameList
             id={itemData.item.id}
             name={itemData.item.name}
-            games={games}
+            games={games.filter((game) => game.genre === itemData.item.id)}
           />
         )}
       />

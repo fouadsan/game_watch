@@ -12,11 +12,10 @@ export const fetchGames = () => {
       dispatch({
         type: SET_GAMES_LOADING,
       });
-      const response = await fetch(
-        "https://8024-105-103-48-219.ngrok.io/api/games/"
+      const response = await axios.get(
+        "https://c9f0-105-103-190-132.ngrok.io/api/games/"
       );
-
-      if (!response.ok) {
+      if (response.status !== 200) {
         dispatch({
           type: SET_GAMES_ERROR,
           error_msg: "somthing went wrong!",
@@ -24,23 +23,36 @@ export const fetchGames = () => {
         throw new Error("Something went wrong!");
       }
 
-      const data = await response.json();
-      console.log(data);
+      const data = await response.data;
+
       const loadedGames = [];
 
-      for (const key in data.results) {
+      data.map((game) => {
         loadedGames.push(
           new Game(
-            key,
-            data.results[key].name,
-            data.results[key].genre,
-            data.results[key].poster,
-            data.results[key].platform,
-            data.results[key].release_date,
-            data.results[key].is_cracked
+            game.id,
+            game.genre,
+            game.name,
+            game.poster,
+            game.platform,
+            game.release_date,
+            game.is_cracked
           )
         );
-      }
+      });
+      // for (const key in data.results) {
+      //   loadedGames.push(
+      //     new Game(
+      //       key,
+      //       data.results[key].name,
+      //       data.results[key].genre,
+      //       data.results[key].poster,
+      //       data.results[key].platform,
+      //       data.results[key].release_date,
+      //       data.results[key].is_cracked
+      //     )
+      //   );
+      // }
 
       dispatch({
         type: SET_GAMES_SUCCESS,

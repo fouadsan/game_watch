@@ -19,7 +19,6 @@ const GameList = ({ id, name, games }) => {
           renderItem={(itemData) => (
             <Game
               name={itemData.item.name}
-              genreId={itemData.item.genreId}
               poster={itemData.item.poster}
               isCracked={itemData.item.isCracked}
             />
@@ -34,6 +33,7 @@ const styles = StyleSheet.create({
   container: {
     height: Dimensions.get("window").height * 0.3,
     marginVertical: Dimensions.get("window").height / 60,
+    marginHorizontal: Dimensions.get("window").width / 40,
   },
 
   title: {

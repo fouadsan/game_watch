@@ -12,11 +12,11 @@ export const fetchGenres = () => {
       dispatch({
         type: SET_GENRES_LOADING,
       });
-      const response = await fetch(
-        "https://8024-105-103-48-219.ngrok.io/api/games/genres/"
+      const response = await axios.get(
+        "https://c9f0-105-103-190-132.ngrok.io/api/games/genres/"
       );
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         dispatch({
           type: SET_GENRES_ERROR,
           error_msg: "somthing went wrong!",
@@ -24,12 +24,17 @@ export const fetchGenres = () => {
         throw new Error("Something went wrong!");
       }
 
-      const data = await response.json();
+      const data = await response.data;
+
       const loadedGenres = [];
 
-      for (const key in data) {
-        loadedGenres.push(new Genre(key, data[key].name));
-      }
+      data.map((genre) => {
+        loadedGenres.push(new Genre(genre.id, genre.name));
+      });
+
+      // for (const key in data) {
+      //   loadedGenres.push(new Genre(key, data[key].name));
+      // }
 
       dispatch({
         type: SET_GENRES_SUCCESS,
