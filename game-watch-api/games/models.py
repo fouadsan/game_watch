@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.html import mark_safe
 
+from users.models import Account
 
 class Genre(models.Model):
     options = (
@@ -39,7 +40,7 @@ class Game(models.Model):
     poster = models.ImageField(
         upload_to="games/posters/", default='games/posters/default.jpg'
     )
-    platform = models.ManyToManyField(Platform)
+    platforms = models.ManyToManyField(Platform)
     release_date = models.DateField(blank=True)
     is_cracked = models.BooleanField(default=False)
 
@@ -72,3 +73,8 @@ class GameDetail(models.Model):
 
     class Meta:
         verbose_name_plural = 'Games Detail'
+
+
+class UserGame(models.Model):
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    favorite_games = models.ManyToManyField(Game)

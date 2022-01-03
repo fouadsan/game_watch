@@ -3,10 +3,21 @@ from rest_framework import pagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework import permissions
+
 from rest_framework.response import Response
 
-from .models import Genre, Game, GameDetail
-from .serializers import GenreSerializer, GameSerializer, GameDetailSerializer
+from .models import Genre, Game, GameDetail, UserGame
+from .serializers import GenreSerializer, GameSerializer, GameDetailSerializer, UserGameSerializer
+
+
+class UserGamePermission(permissions.BasePermission):
+    message = "Editing posts is restricted to the author only"
+
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        return obj.user == request.user
 
 
 class GenreList(generics.ListAPIView):
@@ -55,3 +66,18 @@ class GameDetail(generics.RetrieveAPIView):
     queryset = GameDetail.objects.all()
     serializer_class = GameDetailSerializer
     lookup_field = "slug"
+
+
+class CreateUserGame(generics.CreateAPIView):
+    queryset = UserGame.objects.all()
+    serializer_class = UserGameSerializer
+
+
+# class UpdateUserGame(generics.RetrieveUpdateDestroyAPIView, UserGamePermission):
+#     # permission_classes = [UserGamePermission]
+#     queryset = UserGame.objects.all()
+#     serializer_class = UserGameSerializer
+
+#     lookup_field = "user"
+#     def perform_update(self, serializer):
+#         serializer.save(user=self.request.user)
