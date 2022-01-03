@@ -5,7 +5,13 @@ import { useSelector, useDispatch } from "react-redux";
 import Game from "./Game";
 import { colors } from "../utils/constants";
 
-const GameList = ({ id, name, games }) => {
+const GameList = ({ id, name, games, navigation }) => {
+  const onSelectHandler = (id) => {
+    navigation.navigate("Detail Screen", {
+      gameId: id,
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View>
@@ -21,6 +27,7 @@ const GameList = ({ id, name, games }) => {
               name={itemData.item.name}
               poster={itemData.item.poster}
               isCracked={itemData.item.isCracked}
+              onSelect={() => onSelectHandler(itemData.item.id)}
             />
           )}
         />

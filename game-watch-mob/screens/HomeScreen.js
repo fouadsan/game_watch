@@ -43,13 +43,11 @@ function HomeScreen(props) {
   };
 
   useEffect(() => {
-    // const unsubscribeGenres = props.navigation.addListener("focus", loadGenres);
     const unsubscribeContent = props.navigation.addListener(
       "focus",
       loadGamesContent
     );
     return () => {
-      // unsubscribeGenres();
       unsubscribeContent();
     };
   }, [loadGamesContent]);
@@ -89,6 +87,7 @@ function HomeScreen(props) {
             id={itemData.item.id}
             name={itemData.item.name}
             games={games.filter((game) => game.genre === itemData.item.id)}
+            navigation={props.navigation}
           />
         )}
       />
@@ -100,14 +99,13 @@ function HomeScreen(props) {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: colors.background,
   },
 
   centered: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colors.background,
+    backgroundColor: "transparent",
   },
 
   text: {

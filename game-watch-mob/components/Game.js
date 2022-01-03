@@ -4,9 +4,9 @@ import { View, Image, Dimensions, Text, StyleSheet } from "react-native";
 import TouchableCmp from "./UI/TouchableCmp";
 import { colors } from "../utils/constants";
 
-const Game = ({ name, poster, isCracked }) => {
+const Game = ({ name, poster, isCracked, onSelect }) => {
   return (
-    <TouchableCmp onPress={() => {}}>
+    <TouchableCmp onPress={onSelect}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
           <Image
