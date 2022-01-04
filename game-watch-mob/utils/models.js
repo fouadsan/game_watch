@@ -6,7 +6,21 @@ class Genre {
 }
 
 class Game {
-  constructor(id, genre, name, poster, platform, releaseData, isCracked) {
+  constructor(
+    id,
+    genre,
+    name,
+    poster,
+    platform,
+    releaseData,
+    isCracked,
+    isPopular,
+    image,
+    description,
+    rating,
+    developer,
+    publisher
+  ) {
     this.id = id;
     this.genre = genre;
     this.name = name;
@@ -14,6 +28,12 @@ class Game {
     this.platform = platform;
     this.releaseData = releaseData;
     this.isCracked = isCracked;
+    this.isPopular = isPopular;
+    this.image = image;
+    this.description = description;
+    this.rating = rating;
+    this.developer = developer;
+    this.publisher = publisher;
   }
 }
 

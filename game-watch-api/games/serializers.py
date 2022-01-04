@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Genre, Game, GameDetail, UserGame
+from .models import Genre, Game, UserGame
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -11,13 +11,8 @@ class GenreSerializer(serializers.ModelSerializer):
 class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
-        fields = ('id', 'genre', 'name', 'poster', 'platforms', 'release_date', 'is_cracked')
-
-
-class GameDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = GameDetail
-        fields = ('game', 'slug', 'image', 'description', 'rating', 'developer', 'publisher')
+        fields = ('id', 'genre', 'name', 'poster', 'platforms', 'release_date', 'is_cracked',
+                  'is_popular', 'image', 'description', 'rating', 'developer', 'publisher')
 
 
 class UserGameSerializer(serializers.ModelSerializer):

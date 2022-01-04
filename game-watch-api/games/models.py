@@ -3,6 +3,7 @@ from django.utils.html import mark_safe
 
 from users.models import Account
 
+
 class Genre(models.Model):
     options = (
         ('horror', 'Horror'),
@@ -44,6 +45,13 @@ class Game(models.Model):
     release_date = models.DateField(blank=True)
     is_cracked = models.BooleanField(default=False)
     is_popular = models.BooleanField(default=False)
+    image = models.ImageField(
+        upload_to="games/images/", default='games/images/default.jpg'
+    )
+    description = models.TextField(blank=True)
+    rating = models.DecimalField(max_digits=3, decimal_places=1, blank=True)
+    developer = models.CharField(max_length=150, blank=True)
+    publisher = models.CharField(max_length=150, blank=True)
 
     def poster_tag(self):
         return mark_safe('<img src="%s" width="50" height="50" />' % (self.poster.url))
@@ -53,27 +61,6 @@ class Game(models.Model):
 
     # class Meta:
     #     ordering = ('id', )
-
-
-class GameDetail(models.Model):
-    game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    slug = models.SlugField(max_length=250)
-    image = models.ImageField(
-        upload_to="games/images/", default='games/images/default.jpg'
-    )
-    description = models.TextField(blank=True)
-    rating = models.DecimalField(max_digits=3, decimal_places=1, blank=True)
-    developer = models.CharField(max_length=150, blank=True)
-    publisher = models.CharField(max_length=150, blank=True)
-
-    def image_tag(self):
-        return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
-
-    def __str__(self):
-        return f"{self.game}"
-
-    class Meta:
-        verbose_name_plural = 'Games Detail'
 
 
 class UserGame(models.Model):

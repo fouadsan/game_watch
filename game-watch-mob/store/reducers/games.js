@@ -27,7 +27,6 @@ export const gamesReducer = (state = initialState, action) => {
 
     case SET_GAMES_SUCCESS:
       return { ...state, games: action.games, games_loading: false };
-      console.log(games);
   }
   return state;
 };

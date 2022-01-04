@@ -33,24 +33,17 @@ export const fetchGames = () => {
             game.poster,
             game.platform,
             game.release_date,
-            game.is_cracked
+            game.is_cracked,
+            game.is_popular,
+            game.image,
+            game.description,
+            game.rating,
+            game.developer,
+            game.publisher
           )
         );
       });
-      // for (const key in data.results) {
-      //   loadedGames.push(
-      //     new Game(
-      //       key,
-      //       data.results[key].name,
-      //       data.results[key].genre,
-      //       data.results[key].poster,
-      //       data.results[key].platform,
-      //       data.results[key].release_date,
-      //       data.results[key].is_cracked
-      //     )
-      //   );
-      // }
-
+      console.log(loadedGames);
       dispatch({
         type: SET_GAMES_SUCCESS,
         games: loadedGames,

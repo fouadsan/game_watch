@@ -7,8 +7,8 @@ from rest_framework import permissions
 
 from rest_framework.response import Response
 
-from .models import Genre, Game, GameDetail, UserGame
-from .serializers import GenreSerializer, GameSerializer, GameDetailSerializer, UserGameSerializer
+from .models import Genre, Game, UserGame
+from .serializers import GenreSerializer, GameSerializer, UserGameSerializer
 
 
 class UserGamePermission(permissions.BasePermission):
@@ -33,7 +33,8 @@ class GameList(generics.ListAPIView):
     pagination_class = pagination.LimitOffsetPagination
     # https://api.example.org/accounts/?limit=100&offset=400
     page_size = 1
-    filterset_fields = ['genre', 'platforms', 'release_date', 'is_cracked', 'is_popular']
+    filterset_fields = ['genre', 'platforms',
+                        'release_date', 'is_cracked', 'is_popular']
     filter_backends = [DjangoFilterBackend,
                        filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['^name']
@@ -62,9 +63,8 @@ class GameList(generics.ListAPIView):
 
 
 class GameDetail(generics.RetrieveAPIView):
-    queryset = GameDetail.objects.all()
-    serializer_class = GameDetailSerializer
-    lookup_field = "slug"
+    queryset = Game.objects.all()
+    serializer_class = GameSerializer
 
 
 class CreateUserGame(generics.CreateAPIView):

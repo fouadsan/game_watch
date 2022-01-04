@@ -4,13 +4,13 @@ import { View, Image, Dimensions, Text, StyleSheet } from "react-native";
 import TouchableCmp from "./UI/TouchableCmp";
 import { colors } from "../utils/constants";
 
-const Game = ({ name, poster, isCracked, onSelect }) => {
+const Game = ({ name, posterUrl, isCracked, onSelect }) => {
   return (
     <TouchableCmp onPress={onSelect}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
           <Image
-            source={{ uri: poster }}
+            source={{ uri: posterUrl }}
             style={styles.image}
             resizeMode="stretch"
           />
