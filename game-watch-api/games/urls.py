@@ -7,6 +7,6 @@ urlpatterns = [
     path('', GameList.as_view(), name="games"),
     path('genres/', GenreList.as_view(), name="genres"),
     path('<str:slug>/', GameDetail.as_view(), name='game-detail'),
-    # path('favorites/create/', CreateUserGame.as_view(), name='favorites-create'),
-    # path('favorites/<int:user>/', UpdateUserGame.as_view(), name='favorites-update'),
+    path('favorites/create/', CreateUserGame.as_view(), name='favorites-create'),
+    path('favorites/<int:user>/', UpdateUserGame.as_view(), name='favorites-update'),
 ]

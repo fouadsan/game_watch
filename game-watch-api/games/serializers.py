@@ -21,12 +21,6 @@ class GameDetailSerializer(serializers.ModelSerializer):
 
 
 class UserGameSerializer(serializers.ModelSerializer):
-    def save(self, **kwargs):
-        user = None
-        request = self.context.get("request")
-        if request and hasattr(request, "user"):
-            user = request.user
-    
     class Meta:
         model = UserGame
         fields = ('user', 'favorite_games')

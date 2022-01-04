@@ -76,5 +76,8 @@ class GameDetail(models.Model):
 
 
 class UserGame(models.Model):
-    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True)
     favorite_games = models.ManyToManyField(Game)
+
+    def __str__(self):
+        return self.user.email

@@ -1,3 +1,4 @@
+from django.http import request
 from rest_framework import generics
 from rest_framework import pagination
 from django_filters.rest_framework import DjangoFilterBackend
@@ -11,7 +12,7 @@ from .serializers import GenreSerializer, GameSerializer, GameDetailSerializer, 
 
 
 class UserGamePermission(permissions.BasePermission):
-    message = "Editing posts is restricted to the author only"
+    message = "Editing favorites is restricted to the owner only"
 
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
@@ -70,13 +71,15 @@ class CreateUserGame(generics.CreateAPIView):
     queryset = UserGame.objects.all()
     serializer_class = UserGameSerializer
 
+    def perform_create(self, serializer):
+        if serializer.is_valid():
+            serializer.validated_data['user'] = self.request.user
+            serializer.save()
+
 
 class UpdateUserGame(generics.RetrieveUpdateDestroyAPIView, UserGamePermission):
-    # permission_classes = [UserGamePermission]
+    permission_classes = [UserGamePermission]
     queryset = UserGame.objects.all()
     serializer_class = UserGameSerializer
 
     lookup_field = "user"
-
-    def perform_update(self, serializer):
-        serializer.save(user=self.request.user)
