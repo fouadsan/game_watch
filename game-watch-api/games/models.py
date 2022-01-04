@@ -43,6 +43,7 @@ class Game(models.Model):
     platforms = models.ManyToManyField(Platform)
     release_date = models.DateField(blank=True)
     is_cracked = models.BooleanField(default=False)
+    is_popular = models.BooleanField(default=False)
 
     def poster_tag(self):
         return mark_safe('<img src="%s" width="50" height="50" />' % (self.poster.url))
