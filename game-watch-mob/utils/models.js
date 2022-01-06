@@ -14,7 +14,28 @@ class Game {
     platform,
     releaseData,
     isCracked,
-    isPopular,
+    isPopular
+  ) {
+    this.id = id;
+    this.genre = genre;
+    this.name = name;
+    this.poster = poster;
+    this.platform = platform;
+    this.releaseData = releaseData;
+    this.isCracked = isCracked;
+    this.isPopular = isPopular;
+  }
+}
+
+class GameDetail {
+  constructor(
+    id,
+    genre,
+    name,
+    poster,
+    platform,
+    releaseData,
+    isCracked,
     image,
     description,
     rating,
@@ -28,7 +49,6 @@ class Game {
     this.platform = platform;
     this.releaseData = releaseData;
     this.isCracked = isCracked;
-    this.isPopular = isPopular;
     this.image = image;
     this.description = description;
     this.rating = rating;
@@ -37,4 +57,4 @@ class Game {
   }
 }
 
-export { Genre, Game };
+export { Genre, Game, GameDetail };

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
-import { GameList } from "../components";
+import { GameList, Loading, Error } from "../components";
 import { colors } from "../utils/constants";
 import * as genresActions from "../store/actions/genres";
 import * as gamesActions from "../store/actions/games";
@@ -53,26 +53,11 @@ function HomeScreen(props) {
   }, [loadGamesContent]);
 
   if (genres_loading || games_loading) {
-    return (
-      <View style={styles.centered}>
-        <ActivityIndicator size="large" color={colors.primary} />
-        <StatusBar style="auto" />
-      </View>
-    );
+    return <Loading />;
   }
 
   if (genres_error.is_occured || games_error.is_occured) {
-    return (
-      <View style={styles.centered}>
-        <Text style={styles.text}>{genres_error.msg}</Text>
-        <Button
-          title="Try again"
-          onPress={loadGamesContent}
-          color={colors.primary}
-        />
-        <StatusBar style="auto" />
-      </View>
-    );
+    return <Error msg={genres_error.msg} onPressHandler={loadGamesContent} />;
   }
 
   return (

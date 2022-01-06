@@ -34,16 +34,11 @@ export const fetchGames = () => {
             game.platform,
             game.release_date,
             game.is_cracked,
-            game.is_popular,
-            game.image,
-            game.description,
-            game.rating,
-            game.developer,
-            game.publisher
+            game.is_popular
           )
         );
       });
-      console.log(loadedGames);
+
       dispatch({
         type: SET_GAMES_SUCCESS,
         games: loadedGames,
@@ -53,7 +48,6 @@ export const fetchGames = () => {
         type: SET_GAMES_ERROR,
         error_msg: "network error",
       });
-      console.log(error);
     }
   };
 };

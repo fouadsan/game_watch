@@ -12,7 +12,14 @@ class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
         fields = ('id', 'genre', 'name', 'poster', 'platforms', 'release_date', 'is_cracked',
-                  'is_popular', 'image', 'description', 'rating', 'developer', 'publisher')
+                  'is_popular')
+
+
+class GameDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Game
+        fields = ('id', 'genre', 'name', 'poster', 'platforms', 'release_date', 'is_cracked',
+                  'image', 'description', 'rating', 'developer', 'publisher')
 
 
 class UserGameSerializer(serializers.ModelSerializer):

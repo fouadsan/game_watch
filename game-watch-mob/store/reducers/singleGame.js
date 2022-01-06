@@ -10,10 +10,10 @@ const initialState = {
     is_occured: false,
     msg: "",
   },
-  games: [],
+  game: {},
 };
 
-export const gamesReducer = (state = initialState, action) => {
+export const singleGameReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_GAME_LOADING:
       return { ...state, game_loading: true };

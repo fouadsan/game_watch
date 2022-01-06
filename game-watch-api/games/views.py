@@ -8,7 +8,7 @@ from rest_framework import permissions
 from rest_framework.response import Response
 
 from .models import Genre, Game, UserGame
-from .serializers import GenreSerializer, GameSerializer, UserGameSerializer
+from .serializers import GenreSerializer, GameSerializer, GameDetailSerializer, UserGameSerializer
 
 
 class UserGamePermission(permissions.BasePermission):
@@ -64,7 +64,7 @@ class GameList(generics.ListAPIView):
 
 class GameDetail(generics.RetrieveAPIView):
     queryset = Game.objects.all()
-    serializer_class = GameSerializer
+    serializer_class = GameDetailSerializer
 
 
 class CreateUserGame(generics.CreateAPIView):

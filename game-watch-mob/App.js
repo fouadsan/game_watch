@@ -8,11 +8,13 @@ import * as Font from "expo-font";
 
 import { genresReducer } from "./store/reducers/genres";
 import { gamesReducer } from "./store/reducers/games";
+import { singleGameReducer } from "./store/reducers/singleGame";
 import AppNavigator from "./navigation/AppNavigator";
 
 const rootReducer = combineReducers({
   genres: genresReducer,
   games: gamesReducer,
+  singleGame: singleGameReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
