@@ -5,6 +5,7 @@ import Loading from "./Loading";
 import Error from "./Error";
 import HeaderButton from "./UI/HeaderButton";
 import TouchableCmp from "./UI/TouchableCmp";
+import MainDetail from "./MainDetail";
 
 export {
   DrawerHeader,
@@ -14,4 +15,5 @@ export {
   Error,
   HeaderButton,
   TouchableCmp,
+  MainDetail,
 };

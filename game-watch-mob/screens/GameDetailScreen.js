@@ -15,7 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import CircularProgress from "react-native-circular-progress-indicator";
 
 import * as singleGameActions from "../store/actions/singleGame";
-import { Loading, Error, TouchableCmp } from "../components";
+import { Loading, Error, TouchableCmp, MainDetail } from "../components";
 import { colors } from "../utils/constants";
 
 const GameDetailScreen = (props) => {
@@ -170,12 +170,7 @@ const GameDetailScreen = (props) => {
           </TouchableCmp>
         </View>
       </View>
-      <View style={styles.moreContainer}>
-        <View style={styles.description}>
-          <Text style={styles.descTitle}>description</Text>
-          <Text style={styles.descParagraph}>description</Text>
-        </View>
-      </View>
+      <MainDetail />
     </ScrollView>
   );
 };
@@ -277,20 +272,6 @@ const styles = StyleSheet.create({
     fontFamily: "open-sans",
     fontSize: 16,
     fontWeight: "700",
-    color: colors.text,
-  },
-
-  moreContainer: {
-    height: Dimensions.get("window").height * 0.35,
-    borderWidth: 1,
-    borderColor: "red",
-  },
-
-  descTitle: {
-    color: colors.text,
-  },
-
-  descParagraph: {
     color: colors.text,
   },
 });
