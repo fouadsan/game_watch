@@ -1,7 +1,7 @@
 import { Genre, Game } from "./models";
 
 const colors = {
-  primary: "hsl(360, 67%, 44%);",
+  primary: "#bb2525",
   blackOpacity: "rgba(0, 0, 0, 0.3)",
   whiteOpacity: "rgba(255, 255, 255, 0.3)",
   background: "#222",

@@ -9,8 +9,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import BottomNavigator from "./BottomNavigator";
 import { colors } from "../utils/constants";
-import { DrawerHeader, DrawerFooter } from "../components";
-import HeaderButton from "../components/UI/HeaderButton";
+import { DrawerHeader, DrawerFooter, HeaderButton } from "../components";
 
 const defaultDrawerOptions = {
   drawerStyle: {

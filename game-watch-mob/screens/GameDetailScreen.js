@@ -3,6 +3,8 @@ import {
   View,
   ScrollView,
   ImageBackground,
+  Platform,
+  TouchableNativeFeedback,
   Dimensions,
   Text,
   Image,
@@ -10,9 +12,10 @@ import {
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
+import CircularProgress from "react-native-circular-progress-indicator";
 
 import * as singleGameActions from "../store/actions/singleGame";
-import { Loading, Error } from "../components";
+import { Loading, Error, TouchableCmp } from "../components";
 import { colors } from "../utils/constants";
 
 const GameDetailScreen = (props) => {
@@ -52,12 +55,34 @@ const GameDetailScreen = (props) => {
         style={styles.background}
       >
         <View style={styles.headerRow}>
-          <View style={styles.element}>
-            <Ionicons name="ios-arrow-back" size={25} color="white" />
+          <View style={styles.touchable}>
+            <TouchableCmp
+              onPress={() => props.navigation.goBack()}
+              background={
+                Platform.OS === "android" && Platform.Version >= 21
+                  ? TouchableNativeFeedback.Ripple(colors.primary, true)
+                  : null
+              }
+            >
+              <View style={styles.element}>
+                <Ionicons name="ios-arrow-back" size={25} color="white" />
+              </View>
+            </TouchableCmp>
           </View>
 
-          <View style={styles.element}>
-            <Ionicons name="ios-heart-outline" size={25} color="white" />
+          <View style={styles.touchable}>
+            <TouchableCmp
+              onPress={() => {}}
+              background={
+                Platform.OS === "android" && Platform.Version >= 21
+                  ? TouchableNativeFeedback.Ripple(colors.primary, true)
+                  : null
+              }
+            >
+              <View style={styles.element}>
+                <Ionicons name="ios-heart-outline" size={25} color="white" />
+              </View>
+            </TouchableCmp>
           </View>
         </View>
         <View style={styles.headerRow}>
@@ -68,7 +93,28 @@ const GameDetailScreen = (props) => {
           </View>
 
           <View style={styles.element}>
-            <Ionicons name="ios-heart-outline" size={25} color="white" />
+            <Text
+              style={{
+                fontFamily: "open-sans",
+                fontSize: 12,
+                color: colors.text,
+              }}
+            >
+              Rating
+            </Text>
+            <CircularProgress
+              value={game.rating * 10}
+              radius={22}
+              duration={2000}
+              textColor={colors.text}
+              valueSuffix={"%"}
+              maxValue={100}
+              activeStrokeWidth={4}
+              inActiveStrokeWidth={5}
+              activeStrokeColor={"green"}
+              inActiveStrokeColor={"green"}
+              inActiveStrokeOpacity={0.2}
+            />
           </View>
         </View>
       </ImageBackground>
@@ -81,7 +127,53 @@ const GameDetailScreen = (props) => {
               style={styles.image}
             />
           </View>
-          <View style={styles.infoColumn}></View>
+          <View style={styles.infoColumn}>
+            <View style={styles.row}>
+              <Text
+                numberOfLines={2}
+                ellipsizeMode="tail"
+                style={styles.infoText}
+              >
+                Genres: Shooter, Adventure
+              </Text>
+            </View>
+            <View style={styles.row}>
+              <Text
+                numberOfLines={2}
+                ellipsizeMode="tail"
+                style={styles.infoText}
+              >
+                Platform: PC, PS3, X360, PS4
+              </Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.infoText}>Realse Date: 17Sep, 2013</Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.tabsContainer}>
+          <TouchableCmp onPress={() => {}}>
+            <View
+              style={{
+                ...styles.tab,
+                borderBottomWidth: 2,
+                borderBottomColor: "white",
+              }}
+            >
+              <Text style={styles.tabTitle}>Main</Text>
+            </View>
+          </TouchableCmp>
+          <TouchableCmp onPress={() => {}}>
+            <View style={styles.tab}>
+              <Text style={styles.tabTitle}>Media</Text>
+            </View>
+          </TouchableCmp>
+        </View>
+      </View>
+      <View style={styles.moreContainer}>
+        <View style={styles.description}>
+          <Text style={styles.descTitle}>description</Text>
+          <Text style={styles.descParagraph}>description</Text>
         </View>
       </View>
     </ScrollView>
@@ -102,6 +194,11 @@ const styles = StyleSheet.create({
   headerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+
+  touchable: {
+    borderRadius: 50,
+    overflow: "hidden",
   },
 
   element: {
@@ -126,8 +223,7 @@ const styles = StyleSheet.create({
   },
 
   infoContainer: {
-    borderWidth: 1,
-    borderColor: "red",
+    justifyContent: "space-between",
     height: Dimensions.get("window").height * 0.2,
   },
 
@@ -135,8 +231,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: "80%",
     marginHorizontal: 10,
-    borderWidth: 1,
-    borderColor: "yellow",
+    paddingVertical: 5,
   },
 
   posterContainer: {
@@ -147,6 +242,56 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%",
+  },
+
+  infoColumn: {
+    justifyContent: "space-evenly",
+    width: "80%",
+  },
+
+  row: {
+    flexDirection: "row",
+    marginHorizontal: 10,
+  },
+
+  infoText: {
+    fontFamily: "open-sans",
+    color: colors.text,
+  },
+
+  tabsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+    borderBottomWidth: 1,
+    borderBottomColor: "gray",
+  },
+
+  tab: {
+    width: "40%",
+    alignItems: "center",
+    paddingBottom: 5,
+  },
+
+  tabTitle: {
+    fontFamily: "open-sans",
+    fontSize: 16,
+    fontWeight: "700",
+    color: colors.text,
+  },
+
+  moreContainer: {
+    height: Dimensions.get("window").height * 0.35,
+    borderWidth: 1,
+    borderColor: "red",
+  },
+
+  descTitle: {
+    color: colors.text,
+  },
+
+  descParagraph: {
+    color: colors.text,
   },
 });
 

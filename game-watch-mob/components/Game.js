@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Image, Dimensions, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  Platform,
+  Dimensions,
+  Text,
+  StyleSheet,
+} from "react-native";
 
 import TouchableCmp from "./UI/TouchableCmp";
 import { colors } from "../utils/constants";

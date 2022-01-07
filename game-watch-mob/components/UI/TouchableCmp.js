@@ -13,7 +13,11 @@ const TouchableCmp = (props) => {
     TouchableCmp = TouchableNativeFeedback;
   }
 
-  return <TouchableCmp onPress={props.onPress}>{props.children}</TouchableCmp>;
+  return (
+    <TouchableCmp onPress={props.onPress} background={props.background}>
+      {props.children}
+    </TouchableCmp>
+  );
 };
 
 export default TouchableCmp;
