@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "open-sans",
     color: colors.text,
+    textTransform: "capitalize",
   },
 });
 

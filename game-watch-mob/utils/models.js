@@ -36,11 +36,17 @@ class GameDetail {
     platform,
     releaseData,
     isCracked,
-    image,
     description,
     rating,
     developer,
-    publisher
+    publisher,
+    gameModes,
+    gameEngines,
+    playerPerspective,
+    themes,
+    storyline,
+    screenshots,
+    artworks
   ) {
     this.id = id;
     this.genre = genre;
@@ -49,11 +55,17 @@ class GameDetail {
     this.platform = platform;
     this.releaseData = releaseData;
     this.isCracked = isCracked;
-    this.image = image;
     this.description = description;
     this.rating = rating;
     this.developer = developer;
     this.publisher = publisher;
+    this.gameModes = gameModes;
+    this.gameEngines = gameEngines;
+    this.playerPerspective = playerPerspective;
+    this.themes = themes;
+    this.storyline = storyline;
+    this.screenshots = screenshots;
+    this.artworks = artworks;
   }
 }
 

@@ -30,11 +30,17 @@ export const fetchGame = (gameId) => {
         data.platform,
         data.release_date,
         data.is_cracked,
-        data.image,
         data.description,
         data.rating,
         data.developer,
-        data.publisher
+        data.publisher,
+        data.game_modes,
+        data.game_engines,
+        data.player_perspective,
+        data.themes,
+        data.storyline,
+        data.screenshots,
+        data.artworks
       );
 
       dispatch({

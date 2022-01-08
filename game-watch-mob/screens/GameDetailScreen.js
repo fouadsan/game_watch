@@ -46,7 +46,6 @@ const GameDetailScreen = (props) => {
       unsubscribe();
     };
   }, [loadGame]);
-
   if (loading) {
     return <Loading />;
   }
@@ -54,116 +53,133 @@ const GameDetailScreen = (props) => {
   if (error.is_occured) {
     return <Error msg={error.msg} onPressHandler={loadGame} />;
   }
-
-  return (
-    <ScrollView>
-      <ImageBackground
-        source={{ uri: game.image }}
-        resizeMode="cover"
-        style={styles.background}
-      >
-        <View style={styles.headerRow}>
-          <View style={styles.touchable}>
-            <TouchableCmp
-              onPress={() => props.navigation.goBack()}
-              background={
-                Platform.OS === "android" && Platform.Version >= 21
-                  ? TouchableNativeFeedback.Ripple(colors.primary, true)
-                  : null
-              }
-            >
-              <View style={styles.element}>
-                <Ionicons name="ios-arrow-back" size={25} color="white" />
-              </View>
-            </TouchableCmp>
-          </View>
-
-          <View style={styles.touchable}>
-            <TouchableCmp
-              onPress={() => {}}
-              background={
-                Platform.OS === "android" && Platform.Version >= 21
-                  ? TouchableNativeFeedback.Ripple(colors.primary, true)
-                  : null
-              }
-            >
-              <View style={styles.element}>
-                <Ionicons name="ios-heart-outline" size={25} color="white" />
-              </View>
-            </TouchableCmp>
-          </View>
-        </View>
-        <View style={styles.headerRow}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
-              The Witcher 3: Wild Hunt Wild Hunt Wild Hunt
-            </Text>
-          </View>
-
-          <View style={styles.element}>
-            <Text
-              style={{
-                fontFamily: "open-sans",
-                fontSize: 12,
-                color: colors.text,
-              }}
-            >
-              Rating
-            </Text>
-            <CircularProgress
-              value={game.rating * 10}
-              radius={22}
-              duration={2000}
-              textColor={colors.text}
-              valueSuffix={"%"}
-              maxValue={100}
-              activeStrokeWidth={4}
-              inActiveStrokeWidth={5}
-              activeStrokeColor={"green"}
-              inActiveStrokeColor={"green"}
-              inActiveStrokeOpacity={0.2}
-            />
-          </View>
-        </View>
-      </ImageBackground>
-      <View style={styles.infoContainer}>
-        <View style={styles.info}>
-          <View style={styles.posterContainer}>
-            <Image
-              source={{ uri: game.poster }}
-              resizeMode="stretch"
-              style={styles.image}
-            />
-          </View>
-          <View style={styles.infoColumn}>
-            <View style={styles.row}>
-              <Text
-                numberOfLines={2}
-                ellipsizeMode="tail"
-                style={styles.infoText}
+  if (game) {
+    return (
+      <ScrollView>
+        <ImageBackground
+          source={{ uri: game.screenshots && game.screenshots[0].image }}
+          resizeMode="cover"
+          style={styles.background}
+        >
+          <View style={styles.headerRow}>
+            <View style={styles.touchable}>
+              <TouchableCmp
+                onPress={() => props.navigation.goBack()}
+                background={
+                  Platform.OS === "android" && Platform.Version >= 21
+                    ? TouchableNativeFeedback.Ripple(colors.primary, true)
+                    : null
+                }
               >
-                Genres: Shooter, Adventure
+                <View style={styles.element}>
+                  <Ionicons name="ios-arrow-back" size={25} color="white" />
+                </View>
+              </TouchableCmp>
+            </View>
+
+            <View style={styles.touchable}>
+              <TouchableCmp
+                onPress={() => {}}
+                background={
+                  Platform.OS === "android" && Platform.Version >= 21
+                    ? TouchableNativeFeedback.Ripple(colors.primary, true)
+                    : null
+                }
+              >
+                <View style={styles.element}>
+                  <Ionicons name="ios-heart-outline" size={25} color="white" />
+                </View>
+              </TouchableCmp>
+            </View>
+          </View>
+          <View style={styles.headerRow}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+                The Witcher 3: Wild Hunt Wild Hunt Wild Hunt
               </Text>
             </View>
-            <View style={styles.row}>
+
+            <View style={styles.element}>
               <Text
-                numberOfLines={2}
-                ellipsizeMode="tail"
-                style={styles.infoText}
+                style={{
+                  fontFamily: "open-sans",
+                  fontSize: 12,
+                  color: colors.text,
+                }}
               >
-                Platform: PC, PS3, X360, PS4
+                Rating
               </Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.infoText}>Realse Date: 17Sep, 2013</Text>
+              <CircularProgress
+                value={game.rating * 10}
+                radius={22}
+                duration={2000}
+                textColor={colors.text}
+                valueSuffix={"%"}
+                maxValue={100}
+                activeStrokeWidth={4}
+                inActiveStrokeWidth={5}
+                activeStrokeColor={"green"}
+                inActiveStrokeColor={"green"}
+                inActiveStrokeOpacity={0.2}
+              />
             </View>
           </View>
+        </ImageBackground>
+        <View style={styles.infoContainer}>
+          <View style={styles.info}>
+            <View style={styles.posterContainer}>
+              <Image
+                source={{ uri: game.poster }}
+                resizeMode="stretch"
+                style={styles.image}
+              />
+            </View>
+            <View style={styles.infoColumn}>
+              <View style={styles.row}>
+                <Text
+                  numberOfLines={2}
+                  ellipsizeMode="tail"
+                  style={styles.infoText}
+                >
+                  Genres: Shooter, Adventure
+                </Text>
+              </View>
+              <View style={styles.row}>
+                <Text
+                  numberOfLines={2}
+                  ellipsizeMode="tail"
+                  style={styles.infoText}
+                >
+                  Platform: PC, PS3, X360, PS4
+                </Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.infoText}>Realse Date: 17Sep, 2013</Text>
+              </View>
+            </View>
+          </View>
+          <DetailTabs isMedia={isMedia} setIsMedia={setIsMedia} />
         </View>
-        <DetailTabs isMedia={isMedia} setIsMedia={setIsMedia} />
-      </View>
-      {isMedia ? <MediaDetail /> : <MainDetail />}
-    </ScrollView>
-  );
+        {isMedia ? (
+          <MediaDetail
+            screenshots={game.screenshots}
+            artworks={game.artworks}
+          />
+        ) : (
+          <MainDetail
+            description={game.description}
+            developer={game.developer}
+            publisher={game.publisher}
+            gameModes={game.gameModes}
+            gameEngines={game.gameEngines}
+            playerPerspective={game.playerPerspective}
+            themes={game.themes}
+            storyline={game.storyline}
+          />
+        )}
+      </ScrollView>
+    );
+  }
 };
 
 const styles = StyleSheet.create({

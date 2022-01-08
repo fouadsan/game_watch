@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   name: {
     fontFamily: "open-sans",
     color: colors.text,
+    textTransform: "capitalize",
   },
 });
 

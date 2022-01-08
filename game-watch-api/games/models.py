@@ -1,4 +1,3 @@
-from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils.html import mark_safe
 
@@ -34,14 +33,29 @@ class Platform(models.Model):
         return self.name
 
 
+class Image(models.Model):
+    image = models.ImageField()
+
+    class Meta:
+        abstract = True
+
+
+class Screenshot(Image):
+    pass
+
+
+class Artwork(Image):
+    pass
+
+
 class Mode(models.Model):
     mode_options = (
-        ('single_player', 'Single player'),
+        ('single-player', 'Single player'),
         ('multiplayer', 'Multiplayer'),
     )
 
     name = models.CharField(max_length=20, choices=mode_options,
-                            unique=True, default='single_player')
+                            unique=True, default=1)
 
     def __str__(self):
         return self.name
@@ -74,11 +88,11 @@ class Theme(models.Model):
         ('fantasy', 'Fantasy'),
     )
 
-    title = models.CharField(max_length=100, choices=theme_options,
-                             unique=True, default='action')
+    name = models.CharField(max_length=100, choices=theme_options,
+                            unique=True, default='action')
 
     def __str__(self):
-        return self.title
+        return self.name
 
 
 class Game(models.Model):
@@ -93,25 +107,18 @@ class Game(models.Model):
     release_date = models.DateField(blank=True)
     is_cracked = models.BooleanField(default=False)
     is_popular = models.BooleanField(default=False)
-    screenshots = ArrayField(models.URLField(blank=True))
-    artworks = ArrayField(models.URLField(blank=True, null=True))
-    videos = ArrayField(models.URLField(blank=True, null=True))
-
     description = models.TextField(blank=True, null=True)
     rating = models.DecimalField(
         max_digits=3, decimal_places=1, blank=True, null=True)
     developer = models.CharField(max_length=150, blank=True, null=True)
     publisher = models.CharField(max_length=150, blank=True, null=True)
-
     game_modes = models.ManyToManyField(Mode)
-
     game_engines = models.ManyToManyField(Engine)
-
     player_perspective = models.ManyToManyField(PlayerPerspective)
-
     themes = models.ManyToManyField(Theme)
-
     storyline = models.TextField(blank=True, null=True)
+    screenshots = models.ManyToManyField(Screenshot)
+    artworks = models.ManyToManyField(Artwork)
 
     def poster_tag(self):
         return mark_safe('<img src="%s" width="50" height="50" />' % (self.poster.url))
