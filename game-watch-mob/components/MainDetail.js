@@ -31,7 +31,7 @@ const data = [
 
 const MainDetail = (props) => {
   return (
-    <View>
+    <View style={styles.container}>
       <MainDetailDesc
         title={"Description"}
         paragraph={

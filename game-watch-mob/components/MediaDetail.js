@@ -1,10 +1,12 @@
 import React from "react";
 import { View, Text, Dimensions, StyleSheet } from "react-native";
 
+import MediaItem from "./MediaItem";
+
 const MediaDetail = () => {
   return (
     <View style={styles.container}>
-      <Text>Media Detail</Text>
+      <MediaItem title={"Screenshots"} />
     </View>
   );
 };
