@@ -6,6 +6,8 @@ import Error from "./Error";
 import HeaderButton from "./UI/HeaderButton";
 import TouchableCmp from "./UI/TouchableCmp";
 import MainDetail from "./MainDetail";
+import MediaDetail from "./MediaDetail";
+import DetailTabs from "./DetailTabs";
 
 export {
   DrawerHeader,
@@ -16,4 +18,6 @@ export {
   HeaderButton,
   TouchableCmp,
   MainDetail,
+  MediaDetail,
+  DetailTabs,
 };

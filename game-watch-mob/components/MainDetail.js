@@ -1,81 +1,69 @@
-import React, { useState } from "react";
-import { View, Text, Dimensions, StyleSheet } from "react-native";
+import React from "react";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 
 import TouchableCmp from "./UI/TouchableCmp";
-import { colors } from "../utils/constants";
+import MainDetailArticle from "./MainDetailArticle";
+import MainDetailDesc from "./MainDetailDesc";
+import DetailGridItem from "./DetailGridItem";
+
+const data = [
+  {
+    id: 1,
+    title: "Game Engine",
+    text: "Unreal Engine",
+  },
+  {
+    id: 2,
+    title: "Game Modes",
+    text: "First person, Third person",
+  },
+  {
+    id: 3,
+    title: "Player Perspective",
+    text: "First person, Third person",
+  },
+  {
+    id: 4,
+    title: "game modes",
+    text: "First person, third person",
+  },
+];
 
 const MainDetail = (props) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
   return (
-    <View style={styles.mainContainer}>
-      <View style={styles.description}>
-        <Text style={styles.descTitle}>Description</Text>
-        <Text
-          style={styles.descParagraph}
-          numberOfLines={isExpanded ? 8 : 3}
-          ellipsizeMode="tail"
-        >
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro,
-          magnam qui quis debitis cupiditate non dolor officia earum modi, saepe
-          mollitia distinctio vel eaque hic voluptatem quo ducimus pariatur,
-          deserunt nostrum. Deleniti a ipsa possimus, vero, sunt harum iure
-          fugiat consequuntur quos minima incidunt cum nobis enim, eaque ad
-          itaque.
-        </Text>
-        <View style={styles.btnContainer}>
-          <TouchableCmp onPress={() => setIsExpanded(!isExpanded)}>
-            <View style={styles.readMoreContainer}>
-              <Text style={styles.readMore}>
-                {isExpanded ? "less" : "more"}
-              </Text>
-            </View>
-          </TouchableCmp>
-        </View>
-      </View>
+    <View>
+      <MainDetailDesc
+        title={"Description"}
+        paragraph={
+          "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro, magnam qui quis debitis cupiditate non dolor officia earum modi, saepe mollitia distinctio vel eaque hic voluptatem quo ducimus pariatur, deserunt nostrum. Deleniti a ipsa possimus, vero, sunt harum iure fugiat consequuntur quos minima incidunt cum nobis enim, eaque ad itaque."
+        }
+      />
+      <MainDetailArticle title={"Developer"} name={"Cd Project Red"} />
+      <MainDetailArticle title={"Publisher"} name={"Cd Project"} />
+      <FlatList
+        horizontal
+        data={data}
+        renderItem={(itemData) => (
+          <DetailGridItem
+            title={itemData.item.title}
+            text={itemData.item.text}
+          />
+        )}
+        contentContainerStyle={styles.gridList}
+      />
+      <MainDetailDesc
+        title={"Storyline"}
+        paragraph={
+          "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro, magnam qui quis debitis cupiditate non dolor officia earum modi, saepe mollitia distinctio vel eaque hic voluptatem quo ducimus pariatur, deserunt nostrum. Deleniti a ipsa possimus, vero, sunt harum iure fugiat consequuntur quos minima incidunt cum nobis enim, eaque ad itaque."
+        }
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    height: Dimensions.get("window").height * 0.35,
-    borderWidth: 1,
-    borderColor: "red",
-  },
-
-  description: {
+  gridList: {
     margin: 10,
-  },
-
-  descTitle: {
-    marginBottom: 10,
-    fontSize: 16,
-    fontFamily: "open-sans",
-    fontWeight: "700",
-    color: colors.primary,
-  },
-
-  descParagraph: {
-    fontFamily: "open-sans",
-    color: colors.text,
-  },
-
-  btnContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    marginTop: 2,
-  },
-
-  readMoreContainer: {
-    paddingHorizontal: 5,
-    paddingVertical: 2,
-    backgroundColor: colors.drawer,
-  },
-
-  readMore: {
-    fontFamily: "open-sans",
-    color: colors.text,
   },
 });
 

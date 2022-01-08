@@ -15,10 +15,18 @@ import { Ionicons } from "@expo/vector-icons";
 import CircularProgress from "react-native-circular-progress-indicator";
 
 import * as singleGameActions from "../store/actions/singleGame";
-import { Loading, Error, TouchableCmp, MainDetail } from "../components";
+import {
+  Loading,
+  Error,
+  TouchableCmp,
+  MainDetail,
+  MediaDetail,
+  DetailTabs,
+} from "../components";
 import { colors } from "../utils/constants";
 
 const GameDetailScreen = (props) => {
+  const [isMedia, setIsMedia] = useState(false);
   const gameId = props.route.params.gameId;
 
   const {
@@ -151,26 +159,9 @@ const GameDetailScreen = (props) => {
             </View>
           </View>
         </View>
-        <View style={styles.tabsContainer}>
-          <TouchableCmp onPress={() => {}}>
-            <View
-              style={{
-                ...styles.tab,
-                borderBottomWidth: 2,
-                borderBottomColor: "white",
-              }}
-            >
-              <Text style={styles.tabTitle}>Main</Text>
-            </View>
-          </TouchableCmp>
-          <TouchableCmp onPress={() => {}}>
-            <View style={styles.tab}>
-              <Text style={styles.tabTitle}>Media</Text>
-            </View>
-          </TouchableCmp>
-        </View>
+        <DetailTabs isMedia={isMedia} setIsMedia={setIsMedia} />
       </View>
-      <MainDetail />
+      {isMedia ? <MediaDetail /> : <MainDetail />}
     </ScrollView>
   );
 };
@@ -251,27 +242,6 @@ const styles = StyleSheet.create({
 
   infoText: {
     fontFamily: "open-sans",
-    color: colors.text,
-  },
-
-  tabsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    width: "100%",
-    borderBottomWidth: 1,
-    borderBottomColor: "gray",
-  },
-
-  tab: {
-    width: "40%",
-    alignItems: "center",
-    paddingBottom: 5,
-  },
-
-  tabTitle: {
-    fontFamily: "open-sans",
-    fontSize: 16,
-    fontWeight: "700",
     color: colors.text,
   },
 });
