@@ -3,8 +3,8 @@ import { View, Text, StyleSheet } from "react-native";
 
 import { colors } from "../utils/constants";
 
-const DetailTitle = ({ title }) => {
-  return <Text style={styles.title}>{title}</Text>;
+const DetailTitle = (props) => {
+  return <Text style={{ ...styles.title, ...props.style }}>{props.title}</Text>;
 };
 
 const styles = StyleSheet.create({

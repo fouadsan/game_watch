@@ -1,48 +1,37 @@
 import React from "react";
-import { View, FlatList, StyleSheet } from "react-native";
+import { View, SafeAreaView, FlatList, StyleSheet } from "react-native";
 
 import DetailTitle from "./DetailTitle";
 import MediaImage from "./MediaImage";
 
-const data = [
-  {
-    id: 1,
-    name: "god of war",
-  },
-  {
-    id: 2,
-    name: "god of war",
-  },
-  {
-    id: 3,
-    name: "god of war",
-  },
-  {
-    id: 4,
-    name: "god of war",
-  },
-  {
-    id: 5,
-    name: "god of war",
-  },
-];
-
-const MediaItem = ({ title }) => {
+const MediaItem = ({ title, source }) => {
   return (
-    <View style={styles.container}>
-      <DetailTitle title={title} />
-      <FlatList
-        horizontal
-        data={data}
-        renderItem={(itemData) => <MediaImage name={itemData.item.name} />}
-      />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <DetailTitle title={title} style={{ marginLeft: 5 }} />
+      <View style={styles.list}>
+        <FlatList
+          horizontal
+          data={source}
+          renderItem={(itemData) => (
+            <>
+              <MediaImage imageUrl={itemData.item.image} />
+            </>
+          )}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    margin: 10,
+    marginVertical: 10,
+  },
+
+  safe: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "white",
   },
 });
 

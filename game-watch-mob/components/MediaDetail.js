@@ -3,10 +3,11 @@ import { View, Text, Dimensions, StyleSheet } from "react-native";
 
 import MediaItem from "./MediaItem";
 
-const MediaDetail = () => {
+const MediaDetail = ({ screenshots, artworks }) => {
   return (
     <View style={styles.container}>
-      <MediaItem title={"Screenshots"} />
+      <MediaItem title={"Screenshots"} source={screenshots} />
+      <MediaItem title={"Artworks"} source={artworks} />
     </View>
   );
 };

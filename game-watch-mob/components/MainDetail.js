@@ -19,22 +19,22 @@ const MainDetail = ({
     {
       id: 1,
       title: "Game Modes",
-      name: gameModes[0].name,
+      name: gameModes ? gameModes[0].name : "",
     },
     {
       id: 2,
       title: "Game Engines",
-      name: gameEngines[0].name,
+      name: gameEngines ? gameEngines[0].name : "",
     },
     {
       id: 3,
       title: "Player Perspective",
-      name: playerPerspective[0].name,
+      name: playerPerspective ? playerPerspective[0].name : "",
     },
     {
       id: 4,
       title: "Themes",
-      name: themes[0].name,
+      name: themes ? themes[0].name : "",
     },
   ];
 

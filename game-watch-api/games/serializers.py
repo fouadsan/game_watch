@@ -31,13 +31,13 @@ class GameEnginesSerializer(serializers.ModelSerializer):
 class ScreenshotSerializer(serializers.ModelSerializer):
     class Meta:
         model = Screenshot
-        fields = ('image', )
+        fields = ('id', 'image')
 
 
 class ArtworkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Artwork
-        fields = ('image', )
+        fields = ('id', 'image')
 
 
 class ThemeSerializer(serializers.ModelSerializer):
