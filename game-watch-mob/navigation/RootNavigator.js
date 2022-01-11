@@ -8,6 +8,7 @@ import { View, SafeAreaView, Button } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import BottomNavigator from "./BottomNavigator";
+import AuthNavigator from "./AuthNavigator";
 import { colors } from "../utils/constants";
 import { DrawerHeader, DrawerFooter, HeaderButton } from "../components";
 
@@ -82,6 +83,15 @@ const RootNavigator = () => {
               size={23}
               color={props.color}
             />
+          ),
+        }}
+      />
+      <DrawerNavigator.Screen
+        name="Authentication"
+        component={AuthNavigator}
+        options={{
+          drawerIcon: (props) => (
+            <Ionicons name={"ios-log-in"} size={23} color={props.color} />
           ),
         }}
       />
