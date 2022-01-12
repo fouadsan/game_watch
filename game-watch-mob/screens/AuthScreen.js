@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState, useCallback, useReducer } from "react";
 import {
   ScrollView,
   View,
@@ -11,15 +11,101 @@ import {
   Alert,
   Dimensions,
 } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 
 import Input from "../components/UI/Input";
 import { colors } from "../utils/constants";
 import AuthBtn from "../components/AuthBtn";
+import SwitchAuthBtn from "../components/SwitchAuthBtn";
+import * as authActions from "../store/actions/auth";
+
+const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
+
+const formReducer = (state, action) => {
+  if (action.type === FORM_INPUT_UPDATE) {
+    const updatedValues = {
+      ...state.inputValues,
+      [action.input]: action.value,
+    };
+    const updatedValidities = {
+      ...state.inputValidities,
+      [action.input]: action.isValid,
+    };
+    let updatedFormIsValid = true;
+    for (const key in updatedValidities) {
+      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+    }
+    return {
+      formIsValid: updatedFormIsValid,
+      inputValidities: updatedValidities,
+      inputValues: updatedValues,
+    };
+  }
+  return state;
+};
 
 const AuthScreen = () => {
+  const [isSignup, setIsSignup] = useState(false);
+
+  const { auth_loading: isLoading, auth_error: error } = useSelector(
+    (state) => state.auth
+  );
+
+  const dispatch = useDispatch();
+
+  const [formState, dispatchFormState] = useReducer(formReducer, {
+    inputValues: {
+      email: "",
+      username: "",
+      password: "",
+    },
+    inputValidities: {
+      email: false,
+      username: false,
+      password: false,
+    },
+    formIsValid: false,
+  });
+
+  useEffect(() => {
+    if (error.is_occured) {
+      Alert.alert("Error!", error.msg, [{ text: "Okay" }]);
+    }
+  }, [error]);
+
+  const authHandler = async () => {
+    let action;
+    if (isSignup) {
+      action = authActions.signup(
+        formState.inputValues.email,
+        formState.inputValues.username,
+        formState.inputValues.password
+      );
+    } else {
+      action = authActions.login(
+        formState.inputValues.email,
+        formState.inputValues.password
+      );
+    }
+    await dispatch(action);
+  };
+
+  const inputChangeHandler = useCallback(
+    (inputIdentifier, inputValue, inputValidity) => {
+      dispatchFormState({
+        type: FORM_INPUT_UPDATE,
+        value: inputValue,
+        isValid: inputValidity,
+        input: inputIdentifier,
+      });
+    },
+    [dispatchFormState]
+  );
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={50}
       style={styles.screen}
     >
       <ScrollView>
@@ -35,9 +121,21 @@ const AuthScreen = () => {
             email
             autoCapitalize="none"
             errorText="Please enter a valid email address."
-            onInputChange={() => {}}
+            onInputChange={inputChangeHandler}
             initialValue=""
           />
+          {isSignup && (
+            <Input
+              id="username"
+              label="Username"
+              keyboardType="default"
+              required
+              autoCapitalize="none"
+              errorText="Please enter a valid username."
+              onInputChange={inputChangeHandler}
+              initialValue=""
+            />
+          )}
           <Input
             id="password"
             label="Password"
@@ -47,11 +145,22 @@ const AuthScreen = () => {
             minLength={5}
             autoCapitalize="none"
             errorText="Please enter a valid password."
-            onInputChange={() => {}}
+            onInputChange={inputChangeHandler}
             initialValue=""
           />
-          <AuthBtn title={"Login"} bgColor={"transparent"} />
-          <AuthBtn title={"Signup Instead"} bgColor={colors.primary} />
+          <AuthBtn
+            title={isSignup ? "SignUp" : "Login"}
+            bgColor={"transparent"}
+            isLoading={isLoading}
+            onSelect={authHandler}
+          />
+          <SwitchAuthBtn
+            title={`Switch to ${isSignup ? "Login" : "Sign Up"}`}
+            isLoading={isLoading}
+            onSelect={() => {
+              setIsSignup((prevState) => !prevState);
+            }}
+          />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -71,7 +180,7 @@ const styles = StyleSheet.create({
 
   logo: {
     width: "100%",
-    height: Dimensions.get("window").height / 4,
+    height: Dimensions.get("window").height / 6,
   },
 
   container: {

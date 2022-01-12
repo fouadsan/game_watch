@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet, Dimensions } from "react-native";
 import { colors } from "../../utils/constants";
 
 const INPUT_CHANGE = "INPUT_CHANGE";
@@ -57,6 +57,7 @@ const Input = (props) => {
     if (props.minLength != null && text.length < props.minLength) {
       isValid = false;
     }
+
     dispatch({ type: INPUT_CHANGE, value: text, isValid: isValid });
   };
 
@@ -86,6 +87,7 @@ const Input = (props) => {
 const styles = StyleSheet.create({
   formControl: {
     width: "100%",
+    marginVertical: Dimensions.get("window").height / 60,
   },
   label: {
     fontFamily: "open-sans-bold",

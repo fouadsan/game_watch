@@ -1,27 +1,23 @@
 import React from "react";
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 
 import TouchableCmp from "./UI/TouchableCmp";
 import { colors } from "../utils/constants";
 
-const AuthBtn = ({ title, bgColor, isLoading, onSelect }) => {
+const AuthBtn = ({ title, isLoading, onSelect }) => {
   return (
     <View style={styles.btnContainer}>
-      {isLoading ? (
-        <ActivityIndicator size="large" color={colors.primary} />
-      ) : (
-        <TouchableCmp onPress={onSelect}>
-          <View style={{ ...styles.button, backgroundColor: bgColor }}>
-            <Text style={styles.btnStyle}>{title}</Text>
-          </View>
-        </TouchableCmp>
-      )}
+      <TouchableCmp onPress={isLoading ? () => {} : onSelect}>
+        <View
+          style={{
+            ...styles.button,
+            backgroundColor: colors.primary,
+            opacity: isLoading ? 0.1 : null,
+          }}
+        >
+          <Text style={styles.btnStyle}>{title}</Text>
+        </View>
+      </TouchableCmp>
     </View>
   );
 };
