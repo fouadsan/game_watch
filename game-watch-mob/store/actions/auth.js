@@ -74,7 +74,7 @@ export const login = (email, password) => {
 
 export const logout = () => {
   clearLogoutTimer();
-  // AsyncStorage.removeItem("userData");
+  AsyncStorage.removeItem("userData");
   return { type: authActions.LOGOUT };
 };
 
@@ -100,6 +100,7 @@ export const reconnect = (refresh) => {
 };
 
 const fetchAuthData = async (url, data, dispatch) => {
+  clearLogoutTimer();
   const authData = data;
   try {
     dispatch({ type: authActions.SET_LOGIN_LOADING });
@@ -116,7 +117,7 @@ const fetchAuthData = async (url, data, dispatch) => {
     const data = await response.data;
 
     dispatch(authenticate(data.access, data.refresh, 60000));
-    const expirationDate = new Date(new Date().getTime() + 60000 * 1000);
+    const expirationDate = new Date(new Date().getTime() + 60000);
 
     saveDataToStorage(data.access, data.refresh, expirationDate);
   } catch (error) {

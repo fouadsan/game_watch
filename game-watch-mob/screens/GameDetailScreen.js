@@ -34,6 +34,9 @@ const GameDetailScreen = (props) => {
     game_error: error,
     game,
   } = useSelector((state) => state.singleGame);
+
+  const isAuth = useSelector((state) => !!state.auth.token.access);
+
   const dispatch = useDispatch();
 
   const loadGame = useCallback(async () => {
@@ -46,6 +49,16 @@ const GameDetailScreen = (props) => {
       unsubscribe();
     };
   }, [loadGame]);
+
+  const handleFavorite = () => {
+    console.log("clicked");
+    if (isAuth) {
+      // dispatch favAction
+    } else {
+      props.navigation.navigate("Authentication", { screen: "Auth Screen" });
+    }
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -79,7 +92,7 @@ const GameDetailScreen = (props) => {
 
             <View style={styles.touchable}>
               <TouchableCmp
-                onPress={() => {}}
+                onPress={handleFavorite}
                 background={
                   Platform.OS === "android" && Platform.Version >= 21
                     ? TouchableNativeFeedback.Ripple(colors.primary, true)

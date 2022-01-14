@@ -5,13 +5,14 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 import { View, SafeAreaView, Button } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 
 import BottomNavigator from "./BottomNavigator";
 import AuthNavigator from "./AuthNavigator";
 import { colors } from "../utils/constants";
 import { DrawerHeader, DrawerFooter, HeaderButton } from "../components";
+import * as authActions from "../store/actions/auth";
 
 const defaultDrawerOptions = {
   drawerStyle: {
@@ -52,7 +53,9 @@ const DrawerNavigator = createDrawerNavigator();
 
 const RootNavigator = () => {
   const isAuth = useSelector((state) => !!state.auth.token.access);
-  console.log(isAuth);
+
+  const dispatch = useDispatch();
+
   return (
     <DrawerNavigator.Navigator
       initialRouteName="Home"
@@ -63,11 +66,15 @@ const RootNavigator = () => {
               <View style={{ height: "97%" }}>
                 <DrawerHeader />
                 <DrawerItemList {...props} />
-                <Button
-                  title="logout"
-                  color={colors.primary}
-                  onPress={() => {}}
-                />
+                {isAuth && (
+                  <Button
+                    title="logout"
+                    color={colors.primary}
+                    onPress={() => {
+                      dispatch(authActions.logout());
+                    }}
+                  />
+                )}
               </View>
               <DrawerFooter />
             </SafeAreaView>
