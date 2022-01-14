@@ -117,7 +117,7 @@ const fetchAuthData = async (url, data, dispatch) => {
     const data = await response.data;
 
     dispatch(authenticate(data.access, data.refresh, 60000));
-    const expirationDate = new Date(new Date().getTime() + 60000);
+    const expirationDate = new Date(new Date().getTime() + 60000 * 1000);
 
     saveDataToStorage(data.access, data.refresh, expirationDate);
   } catch (error) {
