@@ -1,3 +1,5 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import axios from "../../utils/axios";
 
 export const authActions = {
@@ -8,6 +10,27 @@ export const authActions = {
   SET_LOGIN_LOADING: "SET_LOGIN_LOADING",
   SET_LOGIN_SUCCESS: "SET_LOGIN_SUCCESS",
   SET_LOGIN_ERROR: "SET_LOGIN_ERROR",
+
+  AUTHENTICATE: "AUTHENTICATE",
+  LOGOUT: "LOGOUT",
+  SET_DID_TRY_AL: "SET_DID_TRY_AL",
+};
+
+let timer;
+
+export const setDidTryAL = () => {
+  return { type: authActions.SET_DID_TRY_AL };
+};
+
+export const authenticate = (accessToken, refreshToken, lifeTime) => {
+  return (dispatch) => {
+    dispatch(setLogoutTimer(lifeTime));
+    dispatch({
+      type: authActions.AUTHENTICATE,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    });
+  };
 };
 
 export const signup = (email, username, password) => {
@@ -59,10 +82,12 @@ export const login = (email, password) => {
 
       const data = await response.data;
 
-      dispatch({
-        type: authActions.SET_LOGIN_SUCCESS,
-        payload: data,
-      });
+      dispatch(authenticate(data.access, data.refresh, 3000));
+      const expirationDate = new Date(
+        new Date().getTime() + parseInt(resData.expiresIn) * 1000
+      );
+
+      saveDataToStorage(data.access, data.refresh, expirationDate);
     } catch (error) {
       // error.response.status;
       dispatch({
@@ -72,4 +97,35 @@ export const login = (email, password) => {
       console.log(error);
     }
   };
+};
+
+export const logout = () => {
+  clearLogoutTimer();
+  AsyncStorage.removeItem("userData");
+  return { type: authActions.LOGOUT };
+};
+
+const clearLogoutTimer = () => {
+  if (timer) {
+    clearTimeout(timer);
+  }
+};
+
+const setLogoutTimer = (expirationTime) => {
+  return (dispatch) => {
+    timer = setTimeout(() => {
+      dispatch(logout());
+    }, expirationTime);
+  };
+};
+
+const saveDataToStorage = (accessToken, refreshToken, expirationDate) => {
+  AsyncStorage.setItem(
+    "userData",
+    JSON.stringify({
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+      expiryDate: expirationDate.toISOString(),
+    })
+  );
 };

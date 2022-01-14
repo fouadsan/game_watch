@@ -119,9 +119,6 @@ const AuthScreen = (props) => {
       style={styles.screen}
     >
       <ScrollView>
-        <View style={styles.logo}>
-          <Text>logo</Text>
-        </View>
         <View style={styles.container}>
           <Input
             id="email"

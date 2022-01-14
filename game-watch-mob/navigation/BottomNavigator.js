@@ -1,8 +1,10 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 import GamesNavigator from "./GameNavigator";
+import AuthNavigator from "./AuthNavigator";
 import { FavoritesScreen } from "../screens";
 import { colors } from "../utils/constants";
 
@@ -37,10 +39,15 @@ const defaultTabOptions = ({ route }) => ({
 const BottomTabNavigator = createBottomTabNavigator();
 
 export const BottomNavigator = () => {
+  const isAuth = useSelector((state) => !!state.auth.accessToken);
   return (
     <BottomTabNavigator.Navigator screenOptions={defaultTabOptions}>
       <BottomTabNavigator.Screen name="Home" component={GamesNavigator} />
-      <BottomTabNavigator.Screen name="Favorites" component={FavoritesScreen} />
+
+      <BottomTabNavigator.Screen
+        name="Favorites"
+        component={isAuth ? FavoritesScreen : AuthNavigator}
+      />
     </BottomTabNavigator.Navigator>
   );
 };

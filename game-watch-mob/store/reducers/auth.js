@@ -11,6 +11,7 @@ const initialState = {
     access: "",
     refresh: "",
   },
+  didTryAutoLogin: false,
   status: "",
 };
 
@@ -44,19 +45,33 @@ export const authReducer = (state = initialState, action) => {
         auth_loading: false,
       };
 
-    case authActions.SET_LOGIN_SUCCESS:
+    case authActions.AUTHENTICATE:
       // axios.defaults.headers.common[
       //   "Authorization"
       // ] = `Bearer ${action.payload.access}`;
-      const newTokenState = action.payload;
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${action.payload.access}`;
+      const newTokenState = {
+        access: action.accessToken,
+        refresh: action.refreshToken,
+      };
+      // axios.defaults.headers.common[
+      //   "Authorization"
+      // ] = `Bearer ${action.accessToken}`;
       return {
         ...state,
         token: newTokenState,
-        status: "loggedIn",
         auth_loading: false,
+      };
+
+    case authActions.SET_DID_TRY_AL:
+      return {
+        ...state,
+        didTryAutoLogin: true,
+      };
+
+    case authActions.LOGOUT:
+      return {
+        ...initialState,
+        didTryAutoLogin: true,
       };
 
     default:
