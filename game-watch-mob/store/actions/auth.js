@@ -1,160 +1,75 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import axios from "../../utils/axios";
 
-export const SET_AUTH_LOADING = "SET_AUTH_LOADING";
-export const SET_AUTH_SUCCESS = "SET_AUTH_SUCCESS";
-export const SET_AUTH_ERROR = "SET_AUTH_ERROR";
+export const authActions = {
+  SET_REGISTER_LOADING: "SET_REGISTER_LOADING",
+  SET_REGISTER_SUCCESS: "SET_REGISTER_SUCCESS",
+  SET_REGISTER_ERROR: "SET_REGISTER_ERROR",
 
-export const authenticate = (accessToken, refreshToken) => {
-  console.log(accessToken);
-  return (dispatch) => {
-    dispatch({
-      type: SET_AUTH_SUCCESS,
-      accessToken: accessToken,
-      refreshToken: refreshToken,
-    });
-  };
+  SET_LOGIN_LOADING: "SET_LOGIN_LOADING",
+  SET_LOGIN_SUCCESS: "SET_LOGIN_SUCCESS",
+  SET_LOGIN_ERROR: "SET_LOGIN_ERROR",
 };
 
-export const login = (email, password) => {
+export const signup = (email, username, password) => {
+  const newUserData = { email, username, password };
   return async (dispatch) => {
     try {
-      dispatch({
-        type: SET_AUTH_LOADING,
-      });
+      dispatch({ type: authActions.SET_REGISTER_LOADING });
 
-      const response = await axios.post("token/", {
-        email: email,
-        password: password,
-      });
-
-      if (response.status !== 200) {
+      const response = await axios.post("users/create/", newUserData);
+      if (response.status !== 201) {
         dispatch({
-          type: SET_AUTH_ERROR,
+          type: authActions.SET_REGISTER_ERROR,
           error_msg: "somthing went wrong!",
         });
         throw new Error("Something went wrong!");
       }
 
       const data = await response.data;
-      dispatch(authenticate(data.access, data.refresh)),
-        saveDataToStorage(data.access, data.refresh);
-    } catch (error) {
-      let msg = "network error";
-      if (error.response.status === 401) {
-        msg = "email or password false";
-      }
-      console.log(error.response.status);
+
       dispatch({
-        type: SET_AUTH_ERROR,
-        error_msg: msg,
+        type: authActions.SET_REGISTER_SUCCESS,
+        payload: data,
       });
+    } catch (error) {
+      // error.response.status;
+      dispatch({
+        type: authActions.SET_REGISTER_ERROR,
+        error_msg: "network error",
+      });
+      console.log(error);
     }
-    // await fetch(
-    //   "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAwgME943HeTkyX9QJak260PNbYZfQI58Q",
-    //   {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       email: email,
-    //       password: password,
-    //       returnSecureToken: true,
-    //     }),
-    //   }
-    // );
-
-    // if (!response.ok) {
-    //   const errorResData = await response.json();
-    //   const errorId = errorResData.error.message;
-    //   let message = "Something went wrong!";
-    //   if (errorId === "EMAIL_NOT_FOUND") {
-    //     message = "This email could not be found!";
-    //   } else if (errorId === "INVALID_PASSWORD") {
-    //     message = "This password is not valid!";
-    //   }
-    //   throw new Error(message);
-    // }
-
-    // const resData = await response.json();
-    // console.log(resData);
-    // dispatch(
-    //   authenticate(
-    //     resData.localId,
-    //     resData.idToken,
-    //     parseInt(resData.expiresIn) * 1000
-    //   )
-    // );
-    // const expirationDate = new Date(
-    //   new Date().getTime() + parseInt(resData.expiresIn) * 1000
-    // );
-    // saveDataToStorage(resData.idToken, resData.localId, expirationDate);
   };
 };
 
-export const signup = (email, username, password) => {
+export const login = (email, password) => {
+  const UserData = { email, password };
   return async (dispatch) => {
-    const response = await axios.post("users/create/", {
-      email: email,
-      username: username,
-      password: password,
-    });
-    console.log(response);
-    dispatch({
-      type: RESP,
-      payload: response,
-    });
-    // await fetch(
-    //   "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAwgME943HeTkyX9QJak260PNbYZfQI58Q",
-    //   {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       email: email,
-    //       password: password,
-    //       returnSecureToken: true,
-    //     }),
-    //   }
-    // );
+    try {
+      dispatch({ type: authActions.SET_LOGIN_LOADING });
 
-    // if (!response.ok) {
-    //   const errorResData = await response.json();
-    //   const errorId = errorResData.error.message;
-    //   let message = "Something went wrong!";
-    //   if (errorId === "EMAIL_NOT_FOUND") {
-    //     message = "This email could not be found!";
-    //   } else if (errorId === "INVALID_PASSWORD") {
-    //     message = "This password is not valid!";
-    //   }
-    //   throw new Error(message);
-    // }
+      const response = await axios.post("token/", UserData);
+      if (response.status !== 200) {
+        dispatch({
+          type: authActions.SET_LOGIN_ERROR,
+          error_msg: "somthing went wrong!",
+        });
+        throw new Error("Something went wrong!");
+      }
 
-    // const resData = await response.json();
-    // console.log(resData);
-    // dispatch(
-    //   authenticate(
-    //     resData.localId,
-    //     resData.idToken,
-    //     parseInt(resData.expiresIn) * 1000
-    //   )
-    // );
-    // const expirationDate = new Date(
-    //   new Date().getTime() + parseInt(resData.expiresIn) * 1000
-    // );
-    // saveDataToStorage(resData.idToken, resData.localId, expirationDate);
+      const data = await response.data;
+
+      dispatch({
+        type: authActions.SET_LOGIN_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      // error.response.status;
+      dispatch({
+        type: authActions.SET_LOGIN_ERROR,
+        error_msg: "network error",
+      });
+      console.log(error);
+    }
   };
-};
-
-const saveDataToStorage = (accessToken, refreshToken) => {
-  AsyncStorage.setItem(
-    "userData",
-    JSON.stringify({
-      accessToken: accessToken,
-      refreshToken: refreshToken,
-    })
-  );
 };

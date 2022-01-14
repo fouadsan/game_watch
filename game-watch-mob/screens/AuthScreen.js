@@ -44,12 +44,15 @@ const formReducer = (state, action) => {
   return state;
 };
 
-const AuthScreen = () => {
+const AuthScreen = (props) => {
   const [isSignup, setIsSignup] = useState(false);
 
-  const { auth_loading: isLoading, auth_error: error } = useSelector(
-    (state) => state.auth
-  );
+  const {
+    auth_loading: isLoading,
+    auth_error: error,
+    token,
+    status,
+  } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -71,9 +74,13 @@ const AuthScreen = () => {
     if (error.is_occured) {
       Alert.alert("Error!", error.msg, [{ text: "Okay" }]);
     }
-  }, [error]);
+    if (status === "registered") {
+      Alert.alert("registered!", "registration success", [{ text: "Okay" }]);
+      // dispatch (login)
+    }
+  }, [error, status]);
 
-  const authHandler = async () => {
+  const handleAuth = async () => {
     let action;
     if (isSignup) {
       action = authActions.signup(
@@ -88,9 +95,12 @@ const AuthScreen = () => {
       );
     }
     await dispatch(action);
+    if (status === "loggedIn") {
+      props.navigation.navigate("Favorites");
+    }
   };
 
-  const inputChangeHandler = useCallback(
+  const handleInputChange = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
       dispatchFormState({
         type: FORM_INPUT_UPDATE,
@@ -121,7 +131,7 @@ const AuthScreen = () => {
             email
             autoCapitalize="none"
             errorText="Please enter a valid email address."
-            onInputChange={inputChangeHandler}
+            onInputChange={handleInputChange}
             initialValue=""
           />
           {isSignup && (
@@ -132,7 +142,7 @@ const AuthScreen = () => {
               required
               autoCapitalize="none"
               errorText="Please enter a valid username."
-              onInputChange={inputChangeHandler}
+              onInputChange={handleInputChange}
               initialValue=""
             />
           )}
@@ -145,14 +155,14 @@ const AuthScreen = () => {
             minLength={5}
             autoCapitalize="none"
             errorText="Please enter a valid password."
-            onInputChange={inputChangeHandler}
+            onInputChange={handleInputChange}
             initialValue=""
           />
           <AuthBtn
             title={isSignup ? "SignUp" : "Login"}
             bgColor={"transparent"}
             isLoading={isLoading}
-            onSelect={authHandler}
+            onSelect={handleAuth}
           />
           <SwitchAuthBtn
             title={`Switch to ${isSignup ? "Login" : "Sign Up"}`}

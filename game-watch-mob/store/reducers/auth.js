@@ -1,8 +1,5 @@
-import {
-  SET_AUTH_LOADING,
-  SET_AUTH_SUCCESS,
-  SET_AUTH_ERROR,
-} from "../actions/auth";
+import { authActions } from "../actions/auth";
+import axios from "../../utils/axios";
 
 const initialState = {
   auth_loading: false,
@@ -10,29 +7,58 @@ const initialState = {
     is_occured: false,
     msg: "",
   },
-  access_token: null,
-  refresh_token: null,
+  token: {
+    access: "",
+    refresh: "",
+  },
+  status: "",
 };
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_AUTH_LOADING:
+    case authActions.SET_REGISTER_LOADING:
       return { ...state, auth_loading: true };
 
-    case SET_AUTH_ERROR:
+    case authActions.SET_REGISTER_ERROR:
       return {
         ...state,
         auth_error: { is_occured: true, msg: action.error_msg },
+        status: "",
         auth_loading: false,
       };
 
-    case SET_AUTH_SUCCESS:
+    case authActions.SET_REGISTER_SUCCESS:
+      // axios.defaults.headers.common[
+      //   "Authorization"
+      // ] = `Bearer ${action.payload.access}`;
+      return { ...state, status: "registered", auth_loading: false };
+
+    case authActions.SET_LOGIN_LOADING:
+      return { ...state, auth_loading: true };
+
+    case authActions.SET_LOGIN_ERROR:
       return {
         ...state,
-        access_token: action.access_token,
-        refresh_token: action.refresh_token,
+        auth_error: { is_occured: true, msg: action.error_msg },
+        status: "",
         auth_loading: false,
       };
+
+    case authActions.SET_LOGIN_SUCCESS:
+      // axios.defaults.headers.common[
+      //   "Authorization"
+      // ] = `Bearer ${action.payload.access}`;
+      const newTokenState = action.payload;
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${action.payload.access}`;
+      return {
+        ...state,
+        token: newTokenState,
+        status: "loggedIn",
+        auth_loading: false,
+      };
+
     default:
       return state;
   }
