@@ -39,7 +39,7 @@ const defaultTabOptions = ({ route }) => ({
 const BottomTabNavigator = createBottomTabNavigator();
 
 export const BottomNavigator = () => {
-  const isAuth = useSelector((state) => !!state.auth.accessToken);
+  const isAuth = useSelector((state) => !!state.auth.token.access);
   return (
     <BottomTabNavigator.Navigator screenOptions={defaultTabOptions}>
       <BottomTabNavigator.Screen name="Home" component={GamesNavigator} />

@@ -24,7 +24,7 @@ export const setDidTryAL = () => {
 
 export const authenticate = (accessToken, refreshToken, lifeTime) => {
   return (dispatch) => {
-    dispatch(setLogoutTimer(lifeTime));
+    dispatch(setLogoutTimer(refreshToken, lifeTime));
     dispatch({
       type: authActions.AUTHENTICATE,
       accessToken: accessToken,
@@ -68,40 +68,13 @@ export const signup = (email, username, password) => {
 export const login = (email, password) => {
   const UserData = { email, password };
   return async (dispatch) => {
-    try {
-      dispatch({ type: authActions.SET_LOGIN_LOADING });
-
-      const response = await axios.post("token/", UserData);
-      if (response.status !== 200) {
-        dispatch({
-          type: authActions.SET_LOGIN_ERROR,
-          error_msg: "somthing went wrong!",
-        });
-        throw new Error("Something went wrong!");
-      }
-
-      const data = await response.data;
-
-      dispatch(authenticate(data.access, data.refresh, 3000));
-      const expirationDate = new Date(
-        new Date().getTime() + parseInt(resData.expiresIn) * 1000
-      );
-
-      saveDataToStorage(data.access, data.refresh, expirationDate);
-    } catch (error) {
-      // error.response.status;
-      dispatch({
-        type: authActions.SET_LOGIN_ERROR,
-        error_msg: "network error",
-      });
-      console.log(error);
-    }
+    fetchAuthData("token/", UserData, dispatch);
   };
 };
 
 export const logout = () => {
   clearLogoutTimer();
-  AsyncStorage.removeItem("userData");
+  // AsyncStorage.removeItem("userData");
   return { type: authActions.LOGOUT };
 };
 
@@ -111,12 +84,49 @@ const clearLogoutTimer = () => {
   }
 };
 
-const setLogoutTimer = (expirationTime) => {
+const setLogoutTimer = (refreshToken, expirationTime) => {
   return (dispatch) => {
     timer = setTimeout(() => {
-      dispatch(logout());
+      dispatch(reconnect(refreshToken));
     }, expirationTime);
   };
+};
+
+export const reconnect = (refresh) => {
+  const refreshToken = { refresh };
+  return async (dispatch) => {
+    await fetchAuthData("token/refresh/", refreshToken, dispatch);
+  };
+};
+
+const fetchAuthData = async (url, data, dispatch) => {
+  const authData = data;
+  try {
+    dispatch({ type: authActions.SET_LOGIN_LOADING });
+
+    const response = await axios.post(url, authData);
+    if (response.status !== 200) {
+      dispatch({
+        type: authActions.SET_LOGIN_ERROR,
+        error_msg: "somthing went wrong!",
+      });
+      throw new Error("Something went wrong!");
+    }
+
+    const data = await response.data;
+
+    dispatch(authenticate(data.access, data.refresh, 60000));
+    const expirationDate = new Date(new Date().getTime() + 60000 * 1000);
+
+    saveDataToStorage(data.access, data.refresh, expirationDate);
+  } catch (error) {
+    // error.response.status;
+    dispatch({
+      type: authActions.SET_LOGIN_ERROR,
+      error_msg: "network error",
+    });
+    console.log(error);
+  }
 };
 
 const saveDataToStorage = (accessToken, refreshToken, expirationDate) => {

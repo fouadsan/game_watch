@@ -5,6 +5,7 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 import { View, SafeAreaView, Button } from "react-native";
+import { useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 
 import BottomNavigator from "./BottomNavigator";
@@ -50,6 +51,8 @@ const defaultDrawerOptions = {
 const DrawerNavigator = createDrawerNavigator();
 
 const RootNavigator = () => {
+  const isAuth = useSelector((state) => !!state.auth.token.access);
+  console.log(isAuth);
   return (
     <DrawerNavigator.Navigator
       initialRouteName="Home"
@@ -86,15 +89,17 @@ const RootNavigator = () => {
           ),
         }}
       />
-      <DrawerNavigator.Screen
-        name="Authentication"
-        component={AuthNavigator}
-        options={{
-          drawerIcon: (props) => (
-            <Ionicons name={"ios-log-in"} size={23} color={props.color} />
-          ),
-        }}
-      />
+      {!isAuth && (
+        <DrawerNavigator.Screen
+          name="Authentication"
+          component={AuthNavigator}
+          options={{
+            drawerIcon: (props) => (
+              <Ionicons name={"ios-log-in"} size={23} color={props.color} />
+            ),
+          }}
+        />
+      )}
     </DrawerNavigator.Navigator>
   );
 };

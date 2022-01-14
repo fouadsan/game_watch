@@ -68,6 +68,13 @@ export const authReducer = (state = initialState, action) => {
         didTryAutoLogin: true,
       };
 
+    case authActions.GET_ACCESS_TOKEN:
+      const newToken = { ...token, accessToken: action.accessToken };
+      return {
+        ...state,
+        token: newToken,
+      };
+
     case authActions.LOGOUT:
       return {
         ...initialState,
