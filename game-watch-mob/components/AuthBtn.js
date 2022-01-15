@@ -10,14 +10,20 @@ import {
 import TouchableCmp from "./UI/TouchableCmp";
 import { colors } from "../utils/constants";
 
-const AuthBtn = ({ title, bgColor, isLoading, onSelect }) => {
+const AuthBtn = ({ title, bgColor, isLoading, onSelect, formIsValid }) => {
   return (
     <View style={styles.btnContainer}>
       {isLoading ? (
         <ActivityIndicator size="large" color={colors.primary} />
       ) : (
-        <TouchableCmp onPress={onSelect}>
-          <View style={{ ...styles.button, backgroundColor: bgColor }}>
+        <TouchableCmp onPress={formIsValid ? onSelect : () => {}}>
+          <View
+            style={{
+              ...styles.button,
+              backgroundColor: bgColor,
+              opacity: formIsValid ? 1 : 0.3,
+            }}
+          >
             <Text style={styles.btnStyle}>{title}</Text>
           </View>
         </TouchableCmp>

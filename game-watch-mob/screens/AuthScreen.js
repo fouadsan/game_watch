@@ -49,7 +49,7 @@ const AuthScreen = (props) => {
   const {
     auth_loading: isLoading,
     auth_error: error,
-    token,
+    // token,
     status,
   } = useSelector((state) => state.auth);
 
@@ -63,7 +63,7 @@ const AuthScreen = (props) => {
     },
     inputValidities: {
       email: false,
-      username: false,
+      username: isSignup ? false : true,
       password: false,
     },
     formIsValid: false,
@@ -139,6 +139,7 @@ const AuthScreen = (props) => {
               autoCapitalize="none"
               errorText="Please enter a valid username."
               onInputChange={handleInputChange}
+              isSignup={isSignup}
               initialValue=""
             />
           )}
@@ -159,6 +160,7 @@ const AuthScreen = (props) => {
             bgColor={"transparent"}
             isLoading={isLoading}
             onSelect={handleAuth}
+            formIsValid={formState.formIsValid}
           />
           <SwitchAuthBtn
             title={`Switch to ${isSignup ? "Login" : "Sign Up"}`}
