@@ -34,7 +34,7 @@ const Game = ({ name, posterUrl, isCracked, onSelect }) => {
                   color: "green",
                 }}
               >
-                cracked
+                Cracked
               </Text>
             ) : (
               <Text
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "open-sans",
     textAlign: "center",
+    textTransform: "capitalize",
   },
 
   text: {

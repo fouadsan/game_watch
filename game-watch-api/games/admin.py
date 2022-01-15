@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Genre, Platform, Screenshot, Artwork, Mode, PlayerPerspective, Engine, Theme, Game, UserGame
+from .models import Genre, Platform, Screenshot, Artwork, Mode, PlayerPerspective, Engine, Theme, Game \
+    # UserGame
 
 admin.site.register(Genre)
 admin.site.register(Platform)
@@ -18,4 +19,4 @@ class GameAdmin(admin.ModelAdmin):
 
 admin.site.register(Game, GameAdmin)
 
-admin.site.register(UserGame)
+# admin.site.register(UserGame)

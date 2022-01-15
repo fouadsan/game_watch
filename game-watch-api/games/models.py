@@ -96,6 +96,7 @@ class Theme(models.Model):
 
 
 class Game(models.Model):
+    users = models.ManyToManyField(Account)
     genre = models.ForeignKey(
         Genre, on_delete=models.PROTECT, default=1
     )
@@ -130,9 +131,9 @@ class Game(models.Model):
     #     ordering = ('id', )
 
 
-class UserGame(models.Model):
-    user = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True)
-    favorite_games = models.ManyToManyField(Game)
+# class UserGame(models.Model):
+#     user = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True)
+#     favorite_games = models.ManyToManyField(Game)
 
-    def __str__(self):
-        return self.user.email
+#     def __str__(self):
+#         return self.user.email

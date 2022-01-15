@@ -1,6 +1,7 @@
 from django.db.models import fields
 from rest_framework import serializers
-from .models import Genre, Platform, Game, Mode, Engine, Screenshot,  Artwork, PlayerPerspective, Theme, UserGame
+from .models import Genre, Platform, Game, Mode, Engine, Screenshot,  Artwork, PlayerPerspective, Theme \
+    # UserGame
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -67,7 +68,7 @@ class GameDetailSerializer(serializers.ModelSerializer):
                   'player_perspective', 'themes', 'storyline', 'screenshots', 'artworks')
 
 
-class UserGameSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserGame
-        fields = ('user', 'favorite_games')
+# class UserGameSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = UserGame
+#         fields = ('user', 'favorite_games')

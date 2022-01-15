@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, Dimensions, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Dimensions, StyleSheet } from "react-native";
 
 import MediaItem from "./MediaItem";
 

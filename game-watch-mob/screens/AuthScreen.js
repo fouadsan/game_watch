@@ -14,7 +14,6 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 
 import Input from "../components/UI/Input";
-import { colors } from "../utils/constants";
 import AuthBtn from "../components/AuthBtn";
 import SwitchAuthBtn from "../components/SwitchAuthBtn";
 import * as authActions from "../store/actions/auth";

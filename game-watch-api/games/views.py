@@ -7,8 +7,10 @@ from rest_framework import permissions
 
 from rest_framework.response import Response
 
-from .models import Genre, Game, UserGame
-from .serializers import GenreSerializer, GameSerializer, GameDetailSerializer, UserGameSerializer
+from .models import Genre, Game \
+    # UserGame
+from .serializers import GenreSerializer, GameSerializer, GameDetailSerializer \
+    # UserGameSerializer
 
 
 class UserGamePermission(permissions.BasePermission):
@@ -67,19 +69,19 @@ class GameDetail(generics.RetrieveAPIView):
     serializer_class = GameDetailSerializer
 
 
-class CreateUserGame(generics.CreateAPIView):
-    queryset = UserGame.objects.all()
-    serializer_class = UserGameSerializer
+# class CreateUserGame(generics.CreateAPIView):
+#     queryset = UserGame.objects.all()
+#     serializer_class = UserGameSerializer
 
-    def perform_create(self, serializer):
-        if serializer.is_valid():
-            serializer.validated_data['user'] = self.request.user
-            serializer.save()
+#     def perform_create(self, serializer):
+#         if serializer.is_valid():
+#             serializer.validated_data['user'] = self.request.user
+#             serializer.save()
 
 
-class UpdateUserGame(generics.RetrieveUpdateDestroyAPIView, UserGamePermission):
-    permission_classes = [UserGamePermission]
-    queryset = UserGame.objects.all()
-    serializer_class = UserGameSerializer
+# class UpdateUserGame(generics.RetrieveUpdateDestroyAPIView, UserGamePermission):
+#     permission_classes = [UserGamePermission]
+#     queryset = UserGame.objects.all()
+#     serializer_class = UserGameSerializer
 
-    lookup_field = "user"
+#     lookup_field = "user"
