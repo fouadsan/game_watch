@@ -17,6 +17,7 @@ const StartupScreen = () => {
         dispatch(authActions.setDidTryAL());
         return;
       }
+      await AsyncStorage.removeItem("userData"); // must delete it
       const transformedData = JSON.parse(userData);
       const { accessToken, refreshToken, expiryDate } = transformedData;
       const expirationDate = new Date(expiryDate);

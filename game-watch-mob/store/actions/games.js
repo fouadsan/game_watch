@@ -5,13 +5,18 @@ export const SET_GAMES_LOADING = "SET_GAMES_LOADING";
 export const SET_GAMES_SUCCESS = "SET_GAMES_SUCCESS";
 export const SET_GAMES_ERROR = "SET_GAMES_ERROR";
 
-export const fetchGames = () => {
+export const fetchGames = (userId) => {
+  let url = "games/";
+  if (userId) {
+    url = `games?users=${userId}/`;
+  }
+
   return async (dispatch) => {
     try {
       dispatch({
         type: SET_GAMES_LOADING,
       });
-      const response = await axios.get("games/");
+      const response = await axios.get(url);
       if (response.status !== 200) {
         dispatch({
           type: SET_GAMES_ERROR,
