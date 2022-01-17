@@ -131,9 +131,9 @@ class Game(models.Model):
     #     ordering = ('id', )
 
 
-# class UserGame(models.Model):
-#     user = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True)
-#     favorite_games = models.ManyToManyField(Game)
+class UserGame(models.Model):
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True)
+    favorite_games = models.ManyToManyField(Game, blank=True)
 
-#     def __str__(self):
-#         return self.user.email
+    def __str__(self):
+        return self.user.email
