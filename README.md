@@ -1,2 +1,2 @@
 # game_watch
-Games website with Django &amp; React
+Games infos mobile app with Django & React (Landing Page) & React Native
