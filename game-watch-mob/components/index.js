@@ -8,6 +8,7 @@ import TouchableCmp from "./UI/TouchableCmp";
 import MainDetail from "./MainDetail";
 import MediaDetail from "./MediaDetail";
 import DetailTabs from "./DetailTabs";
+import Game from "./Game";
 
 export {
   DrawerHeader,
@@ -20,4 +21,5 @@ export {
   MainDetail,
   MediaDetail,
   DetailTabs,
+  Game,
 };

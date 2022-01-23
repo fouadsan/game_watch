@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import axios from "../../utils/axios";
+import jwt_decode from "jwt-decode";
 
 export const authActions = {
   SET_REGISTER_LOADING: "SET_REGISTER_LOADING",
@@ -22,13 +23,14 @@ export const setDidTryAL = () => {
   return { type: authActions.SET_DID_TRY_AL };
 };
 
-export const authenticate = (accessToken, refreshToken, lifeTime) => {
+export const authenticate = (accessToken, refreshToken, lifetime, userId) => {
   return (dispatch) => {
-    dispatch(setLogoutTimer(refreshToken, lifeTime));
+    dispatch(setLogoutTimer(refreshToken, lifetime));
     dispatch({
       type: authActions.AUTHENTICATE,
       accessToken: accessToken,
       refreshToken: refreshToken,
+      userId: userId,
     });
   };
 };
@@ -116,10 +118,24 @@ const fetchAuthData = async (url, data, dispatch) => {
 
     const data = await response.data;
 
-    dispatch(authenticate(data.access, data.refresh, 60000));
-    const expirationDate = new Date(new Date().getTime() + 60000);
+    const decodedToken = await jwt_decode(data.access);
+    const expirationDate = new Date(decodedToken.exp);
 
-    saveDataToStorage(data.access, data.refresh, expirationDate);
+    // last working area
+    console.log(expirationDate.getTime());
+    const lifetime = expirationDate.getTime() - new Date().getTime();
+    // last working area
+
+    dispatch(
+      authenticate(data.access, data.refresh, lifetime, decodedToken.user_id)
+    );
+
+    saveDataToStorage(
+      data.access,
+      data.refresh,
+      expirationDate,
+      decodedToken.user_id
+    );
   } catch (error) {
     // error.response.status;
     dispatch({
@@ -130,13 +146,19 @@ const fetchAuthData = async (url, data, dispatch) => {
   }
 };
 
-const saveDataToStorage = (accessToken, refreshToken, expirationDate) => {
+const saveDataToStorage = (
+  accessToken,
+  refreshToken,
+  expirationDate,
+  userId
+) => {
   AsyncStorage.setItem(
     "userData",
     JSON.stringify({
       accessToken: accessToken,
       refreshToken: refreshToken,
       expiryDate: expirationDate.toISOString(),
+      userId: userId,
     })
   );
 };

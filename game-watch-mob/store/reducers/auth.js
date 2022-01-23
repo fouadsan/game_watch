@@ -13,6 +13,7 @@ const initialState = {
   },
   didTryAutoLogin: false,
   status: "",
+  user_id: null,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -59,6 +60,7 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         token: newTokenState,
+        user_id: action.userId,
         auth_loading: false,
       };
 

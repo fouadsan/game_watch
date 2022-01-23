@@ -42,7 +42,7 @@ export const fetchGame = (gameId) => {
         data.screenshots,
         data.artworks
       );
-      console.log(loadedGame);
+
       dispatch({
         type: SET_GAME_SUCCESS,
         game: loadedGame,

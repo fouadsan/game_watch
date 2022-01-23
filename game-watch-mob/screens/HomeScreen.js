@@ -1,13 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  View,
-  FlatList,
-  Text,
-  Button,
-  ActivityIndicator,
-  StyleSheet,
-} from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import { GameList, Loading, Error } from "../components";
@@ -84,21 +77,6 @@ function HomeScreen(props) {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-  },
-
-  centered: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "transparent",
-  },
-
-  text: {
-    marginBottom: 10,
-    fontFamily: "open-sans",
-    fontSize: 18,
-    color: colors.text,
-    textTransform: "capitalize",
   },
 });
 

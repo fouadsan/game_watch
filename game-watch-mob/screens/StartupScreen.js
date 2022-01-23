@@ -17,12 +17,17 @@ const StartupScreen = () => {
         dispatch(authActions.setDidTryAL());
         return;
       }
-      await AsyncStorage.removeItem("userData"); // must delete it
+
       const transformedData = JSON.parse(userData);
-      const { accessToken, refreshToken, expiryDate } = transformedData;
+      const { accessToken, refreshToken, expiryDate, userId } = transformedData;
       const expirationDate = new Date(expiryDate);
 
-      if (expirationDate <= new Date() || !accessToken || !refreshToken) {
+      if (
+        expirationDate <= new Date() ||
+        !accessToken ||
+        !refreshToken ||
+        !userId
+      ) {
         // props.navigation.navigate('Auth');
         dispatch(authActions.setDidTryAL());
         return;
@@ -32,7 +37,12 @@ const StartupScreen = () => {
 
       // props.navigation.navigate('Shop');
       dispatch(
-        authActions.authenticate(accessToken, refreshToken, expirationTime)
+        authActions.authenticate(
+          accessToken,
+          refreshToken,
+          expirationTime,
+          userId
+        )
       );
     };
 
