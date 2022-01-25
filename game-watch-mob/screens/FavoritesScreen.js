@@ -1,12 +1,18 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect, useCallback } from "react";
-import { FlatList, View, Image, StyleSheet } from "react-native";
+import {
+  SafeAreaView,
+  FlatList,
+  View,
+  Image,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import * as gamesActions from "../store/actions/games";
 import { colors } from "../utils/constants";
 import { Loading, Error } from "../components";
-import { Game } from "../components";
 
 function FavoritesScreen(props) {
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -22,7 +28,7 @@ function FavoritesScreen(props) {
   const userId = useSelector((state) => state.auth.user_id);
 
   const onSelectHandler = (id) => {
-    navigation.navigate("Detail Screen", {
+    props.navigation.navigate("Detail Screen", {
       gameId: id,
     });
   };
@@ -50,26 +56,29 @@ function FavoritesScreen(props) {
   console.log(games);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.list}>
-        <FlatList
-          onRefresh={loadGames}
-          refreshing={isRefreshing}
-          showsVerticalScrollIndicator={false}
-          data={games}
-          renderItem={(itemData) => (
-            <Game
-              name={itemData.item.name}
-              posterUrl={itemData.item.poster}
-              isCracked={itemData.item.isCracked}
-              onSelect={() => onSelectHandler(itemData.item.id)}
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        onRefresh={loadGames}
+        refreshing={isRefreshing}
+        showsVerticalScrollIndicator={false}
+        data={games}
+        renderItem={(itemData) => (
+          <View
+            style={{
+              flex: 1,
+              margin: 0,
+            }}
+          >
+            <Image
+              style={styles.image}
+              source={{ uri: itemData.item.poster }}
             />
-          )}
-          //Setting the number of column
-          numColumns={3}
-        />
-      </View>
-    </View>
+          </View>
+        )}
+        //Setting the number of column
+        numColumns={3}
+      />
+    </SafeAreaView>
   );
 }
 
@@ -80,9 +89,17 @@ const styles = StyleSheet.create({
   },
 
   list: {
+    padding: 2,
     flex: 1,
     borderWidth: 1,
     borderColor: "white",
+  },
+
+  image: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: Dimensions.get("window").width / 2,
+    width: Dimensions.get("window").width / 3,
   },
 });
 

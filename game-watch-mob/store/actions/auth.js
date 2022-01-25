@@ -119,15 +119,12 @@ const fetchAuthData = async (url, data, dispatch) => {
     const data = await response.data;
 
     const decodedToken = await jwt_decode(data.access);
-    const expirationDate = new Date(decodedToken.exp);
+    const expirationDate = new Date(decodedToken.exp * 1000);
 
-    // last working area
-    console.log(expirationDate.getTime());
-    const lifetime = expirationDate.getTime() - new Date().getTime();
-    // last working area
+    const halftime = (expirationDate.getTime() - new Date().getTime()) / 2;
 
     dispatch(
-      authenticate(data.access, data.refresh, lifetime, decodedToken.user_id)
+      authenticate(data.access, data.refresh, halftime, decodedToken.user_id)
     );
 
     saveDataToStorage(
