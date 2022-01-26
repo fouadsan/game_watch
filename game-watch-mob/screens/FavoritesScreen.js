@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import * as gamesActions from "../store/actions/games";
 import { colors } from "../utils/constants";
 import { Loading, Error } from "../components";
+import { FavGame } from "../components";
 
 function FavoritesScreen(props) {
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -57,27 +58,22 @@ function FavoritesScreen(props) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        onRefresh={loadGames}
-        refreshing={isRefreshing}
-        showsVerticalScrollIndicator={false}
-        data={games}
-        renderItem={(itemData) => (
-          <View
-            style={{
-              flex: 1,
-              margin: 0,
-            }}
-          >
-            <Image
-              style={styles.image}
-              source={{ uri: itemData.item.poster }}
+      <View style={styles.list}>
+        <FlatList
+          onRefresh={loadGames}
+          refreshing={isRefreshing}
+          showsVerticalScrollIndicator={false}
+          data={games}
+          renderItem={(itemData) => (
+            <FavGame
+              posterUrl={itemData.item.poster}
+              onSelect={() => onSelectHandler(itemData.item.id)}
             />
-          </View>
-        )}
-        //Setting the number of column
-        numColumns={3}
-      />
+          )}
+          //Setting the number of column
+          numColumns={4}
+        />
+      </View>
     </SafeAreaView>
   );
 }
@@ -89,17 +85,8 @@ const styles = StyleSheet.create({
   },
 
   list: {
-    padding: 2,
     flex: 1,
-    borderWidth: 1,
-    borderColor: "white",
-  },
-
-  image: {
-    justifyContent: "center",
-    alignItems: "center",
-    height: Dimensions.get("window").width / 2,
-    width: Dimensions.get("window").width / 3,
+    marginVertical: 5,
   },
 });
 

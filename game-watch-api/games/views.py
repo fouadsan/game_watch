@@ -4,7 +4,7 @@ from rest_framework import pagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework import permissions
-
+from rest_framework import status
 from rest_framework.response import Response
 
 from .models import Genre, Game
@@ -14,7 +14,7 @@ from .serializers import GenreSerializer, GameSerializer, GameDetailSerializer
 class UserGamePermission(permissions.BasePermission):
     message = "Editing favorites is restricted to the owner only"
 
-    def has_object_permission(self, request, view, obj):
+    def has_change_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return True
 
@@ -62,6 +62,13 @@ class GameList(generics.ListAPIView):
         return queryset
 
 
-class GameDetail(generics.RetrieveAPIView):
+class GameDetail(generics.RetrieveUpdateAPIView, UserGamePermission):
+    # permission_classes = [UserGamePermission]
     queryset = Game.objects.all()
     serializer_class = GameDetailSerializer
+
+    def patch(self, request, *args, **kwargs):
+        if request.user not in self.get_object().users.all():
+            self.get_object().users.add(1)
+            return Response({'detail': 'User added to game'}, status=status.HTTP_200_OK)
+        return Response({'detail': self.bad_request_message}, status=status.HTTP_400_BAD_REQUEST)

@@ -9,6 +9,7 @@ import MainDetail from "./MainDetail";
 import MediaDetail from "./MediaDetail";
 import DetailTabs from "./DetailTabs";
 import Game from "./Game";
+import FavGame from "./FavGame";
 
 export {
   DrawerHeader,
@@ -22,4 +23,5 @@ export {
   MediaDetail,
   DetailTabs,
   Game,
+  FavGame,
 };

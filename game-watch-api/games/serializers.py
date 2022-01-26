@@ -64,4 +64,4 @@ class GameDetailSerializer(serializers.ModelSerializer):
         model = Game
         fields = ('id', 'genre', 'name', 'poster', 'platforms', 'release_date', 'is_cracked',
                   'description', 'rating', 'developer', 'publisher', 'game_modes', 'game_engines',
-                  'player_perspective', 'themes', 'storyline', 'screenshots', 'artworks')
+                  'player_perspective', 'themes', 'storyline', 'screenshots', 'artworks', 'users')
