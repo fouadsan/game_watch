@@ -106,7 +106,7 @@ class Game(models.Model):
     )
     platforms = models.ManyToManyField(Platform)
     release_date = models.DateField(blank=True)
-    is_cracked = models.BooleanField(default=False)
+    is_released = models.BooleanField(default=False)
     is_popular = models.BooleanField(default=False)
     description = models.TextField(blank=True, null=True)
     rating = models.DecimalField(

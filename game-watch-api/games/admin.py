@@ -12,8 +12,13 @@ admin.site.register(Artwork)
 
 
 class GameAdmin(admin.ModelAdmin):
+    fields = ('name', 'id', 'genre', 'poster_tag',
+              'release_date')
+
     list_display = ('name', 'id', 'genre', 'poster_tag',
-                    'release_date', 'is_cracked')
+                    'release_date', 'is_released')
+
+    # to be continue
 
 
 admin.site.register(Game, GameAdmin)

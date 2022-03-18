@@ -35,7 +35,7 @@ class GameList(generics.ListAPIView):
     # https://api.example.org/accounts/?limit=100&offset=400
     page_size = 1
     filterset_fields = ['id', 'genre', 'platforms',
-                        'release_date', 'is_cracked', 'is_popular']
+                        'release_date', 'is_popular']
     filter_backends = [DjangoFilterBackend,
                        filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['^name']
