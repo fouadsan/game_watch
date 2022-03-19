@@ -10,6 +10,7 @@ import { authReducer } from "./store/reducers/auth";
 import { genresReducer } from "./store/reducers/genres";
 import { gamesReducer } from "./store/reducers/games";
 import { singleGameReducer } from "./store/reducers/singleGame";
+import { favReducer } from "./store/reducers/fav";
 import AppNavigator from "./navigation/AppNavigator";
 
 const rootReducer = combineReducers({
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   genres: genresReducer,
   games: gamesReducer,
   singleGame: singleGameReducer,
+  fav: favReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

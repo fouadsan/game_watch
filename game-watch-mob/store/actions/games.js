@@ -33,12 +33,13 @@ export const fetchGames = (userId) => {
         loadedGames.push(
           new Game(
             game.id,
+            game.users,
             game.genre,
             game.name,
             game.poster,
             game.platform,
             game.release_date,
-            game.is_cracked,
+            game.is_released,
             game.is_popular
           )
         );

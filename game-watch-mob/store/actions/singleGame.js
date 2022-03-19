@@ -29,7 +29,7 @@ export const fetchGame = (gameId) => {
         data.poster,
         data.platform,
         data.release_date,
-        data.is_cracked,
+        data.is_released,
         data.description,
         data.rating,
         data.developer,

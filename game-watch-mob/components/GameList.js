@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, Dimensions, Text, FlatList, StyleSheet } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
 
 import Game from "./Game";
 import { colors } from "../utils/constants";
 
-const GameList = ({ id, name, games, navigation }) => {
+const GameList = ({ name, games, navigation }) => {
   const onSelectHandler = (id) => {
     navigation.navigate("Detail Screen", {
       gameId: id,

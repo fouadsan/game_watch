@@ -12,8 +12,8 @@ admin.site.register(Artwork)
 
 
 class GameAdmin(admin.ModelAdmin):
-    fields = ('name', 'id', 'genre', 'poster_tag',
-              'release_date')
+    fields = ('name', 'genre', 'poster',
+              'platforms', 'is_popular', 'description', 'developer', 'publisher', 'game_modes', 'game_engines', 'player_perspective', 'themes', 'storyline', 'screenshots', 'artworks')
 
     list_display = ('name', 'id', 'genre', 'poster_tag',
                     'release_date', 'is_released')

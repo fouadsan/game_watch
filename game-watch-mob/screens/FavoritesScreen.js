@@ -1,13 +1,5 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  SafeAreaView,
-  FlatList,
-  View,
-  Image,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
+import { SafeAreaView, FlatList, View, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import * as gamesActions from "../store/actions/games";
@@ -53,8 +45,6 @@ function FavoritesScreen(props) {
   if (error.is_occured) {
     return <Error msg={error.msg} onPressHandler={loadGames} />;
   }
-
-  console.log(games);
 
   return (
     <SafeAreaView style={styles.container}>

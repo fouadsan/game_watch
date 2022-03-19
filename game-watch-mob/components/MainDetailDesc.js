@@ -7,7 +7,6 @@ import { colors } from "../utils/constants";
 
 const MainDetailDesc = ({ title, paragraph }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-
   return (
     <View style={styles.article}>
       <DetailTitle title={title} />

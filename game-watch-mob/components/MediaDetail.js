@@ -6,8 +6,8 @@ import MediaItem from "./MediaItem";
 const MediaDetail = ({ screenshots, artworks }) => {
   return (
     <View style={styles.container}>
-      <MediaItem title={"Screenshots"} source={screenshots} />
-      <MediaItem title={"Artworks"} source={artworks} />
+      {screenshots && <MediaItem title={"Screenshots"} source={screenshots} />}
+      {artworks && <MediaItem title={"Artworks"} source={artworks} />}
     </View>
   );
 };

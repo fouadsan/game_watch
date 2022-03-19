@@ -40,9 +40,18 @@ const MainDetail = ({
 
   return (
     <View style={styles.container}>
-      <MainDetailDesc title={"Description"} paragraph={description} />
-      <MainDetailArticle title={"Developer"} name={developer} />
-      <MainDetailArticle title={"Publisher"} name={publisher} />
+      <MainDetailDesc
+        title={"Description"}
+        paragraph={description ? description : "N/A"}
+      />
+      <MainDetailArticle
+        title={"Developer"}
+        name={developer ? developer : "N/A"}
+      />
+      <MainDetailArticle
+        title={"Publisher"}
+        name={publisher ? publisher : "N/A"}
+      />
       <FlatList
         horizontal
         data={data}

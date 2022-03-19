@@ -11,7 +11,7 @@ import {
 import TouchableCmp from "./UI/TouchableCmp";
 import { colors } from "../utils/constants";
 
-const Game = ({ name, posterUrl, isCracked, onSelect }) => {
+const Game = ({ name, posterUrl, isReleased, onSelect }) => {
   return (
     <TouchableCmp onPress={onSelect}>
       <View style={styles.container}>
@@ -27,14 +27,14 @@ const Game = ({ name, posterUrl, isCracked, onSelect }) => {
             {name}
           </Text>
           <View>
-            {isCracked ? (
+            {isReleased ? (
               <Text
                 style={{
                   ...styles.text,
                   color: "green",
                 }}
               >
-                Cracked
+                released
               </Text>
             ) : (
               <Text
@@ -43,7 +43,7 @@ const Game = ({ name, posterUrl, isCracked, onSelect }) => {
                   color: colors.primary,
                 }}
               >
-                uncracked
+                unreleased
               </Text>
             )}
           </View>

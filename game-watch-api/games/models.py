@@ -1,3 +1,4 @@
+import datetime as dt
 from django.db import models
 from django.utils.html import mark_safe
 
@@ -106,7 +107,6 @@ class Game(models.Model):
     )
     platforms = models.ManyToManyField(Platform)
     release_date = models.DateField(blank=True)
-    is_released = models.BooleanField(default=False)
     is_popular = models.BooleanField(default=False)
     description = models.TextField(blank=True, null=True)
     rating = models.DecimalField(
@@ -120,6 +120,10 @@ class Game(models.Model):
     storyline = models.TextField(blank=True, null=True)
     screenshots = models.ManyToManyField(Screenshot)
     artworks = models.ManyToManyField(Artwork)
+
+    @property
+    def is_released(self):
+        return dt.datetime.now().date() - self.release_date >= dt.timedelta(days=0)
 
     def poster_tag(self):
         return mark_safe('<img src="%s" width="50" height="50" />' % (self.poster.url))

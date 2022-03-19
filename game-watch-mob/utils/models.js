@@ -13,7 +13,7 @@ class Game {
     poster,
     platform,
     releaseData,
-    isCracked,
+    isReleased,
     isPopular
   ) {
     this.id = id;
@@ -22,7 +22,7 @@ class Game {
     this.poster = poster;
     this.platform = platform;
     this.releaseData = releaseData;
-    this.isCracked = isCracked;
+    this.isReleased = isReleased;
     this.isPopular = isPopular;
   }
 }
@@ -30,12 +30,13 @@ class Game {
 class GameDetail {
   constructor(
     id,
+    users,
     genre,
     name,
     poster,
     platform,
     releaseData,
-    isCracked,
+    isReleased,
     description,
     rating,
     developer,
@@ -49,12 +50,13 @@ class GameDetail {
     artworks
   ) {
     this.id = id;
+    this.users = users;
     this.genre = genre;
     this.name = name;
     this.poster = poster;
     this.platform = platform;
     this.releaseData = releaseData;
-    this.isCracked = isCracked;
+    this.isReleased = isReleased;
     this.description = description;
     this.rating = rating;
     this.developer = developer;

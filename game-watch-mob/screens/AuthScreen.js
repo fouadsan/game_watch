@@ -4,10 +4,7 @@ import {
   View,
   KeyboardAvoidingView,
   Platform,
-  Text,
-  Button,
   StyleSheet,
-  ActivityIndicator,
   Alert,
   Dimensions,
 } from "react-native";

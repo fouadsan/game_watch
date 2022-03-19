@@ -34,7 +34,7 @@ class GameList(generics.ListAPIView):
     pagination_class = pagination.LimitOffsetPagination
     # https://api.example.org/accounts/?limit=100&offset=400
     page_size = 1
-    filterset_fields = ['id', 'genre', 'platforms',
+    filterset_fields = ['id', 'users', 'genre', 'platforms',
                         'release_date', 'is_popular']
     filter_backends = [DjangoFilterBackend,
                        filters.SearchFilter, filters.OrderingFilter]
