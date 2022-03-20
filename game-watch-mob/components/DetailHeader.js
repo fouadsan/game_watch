@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -22,8 +22,10 @@ const DetailHeader = ({
   handleFavorite,
   isMedia,
   setIsMedia,
+  userId,
   error,
   success,
+  isFav,
 }) => {
   return (
     <View>
@@ -58,7 +60,11 @@ const DetailHeader = ({
               }
             >
               <View style={styles.element}>
-                <Ionicons name={"ios-heart-outline"} size={25} color="white" />
+                <Ionicons
+                  name={isFav ? "ios-heart" : "ios-heart-outline"}
+                  size={25}
+                  color="white"
+                />
               </View>
             </TouchableCmp>
           </View>

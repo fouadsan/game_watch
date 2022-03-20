@@ -2,7 +2,7 @@ import {
   SET_FAV_LOADING,
   SET_FAV_SUCCESS,
   SET_FAV_ERROR,
-} from "../actions/games";
+} from "../actions/fav";
 
 const initialState = {
   fav_loading: false,

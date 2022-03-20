@@ -6,10 +6,9 @@ export const SET_FAV_ERROR = "SET_FAV_ERROR";
 
 export const setFavorite = (gameId, token) => {
   const url = `games/${gameId}/`;
-  console.log(token);
+
   return async (dispatch) => {
     try {
-      console.log("salam");
       dispatch({
         type: SET_FAV_LOADING,
       });

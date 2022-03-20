@@ -11,6 +11,7 @@ import MediaDetail from "./MediaDetail";
 import DetailTabs from "./DetailTabs";
 import Game from "./Game";
 import FavGame from "./FavGame";
+import ToastCmp from "./UI/ToastCmp";
 
 export {
   DrawerHeader,
@@ -26,4 +27,5 @@ export {
   DetailTabs,
   Game,
   FavGame,
+  ToastCmp,
 };

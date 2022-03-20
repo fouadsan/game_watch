@@ -24,6 +24,7 @@ export const fetchGame = (gameId) => {
 
       const loadedGame = new GameDetail(
         data.id,
+        data.users,
         data.genre,
         data.name,
         data.poster,

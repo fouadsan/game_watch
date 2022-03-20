@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
+import { RootSiblingParent } from "react-native-root-siblings";
 
 import { authReducer } from "./store/reducers/auth";
 import { genresReducer } from "./store/reducers/genres";
@@ -45,7 +46,9 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <AppNavigator />
+      <RootSiblingParent>
+        <AppNavigator />
+      </RootSiblingParent>
     </Provider>
   );
 }

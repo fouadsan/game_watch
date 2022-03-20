@@ -30,6 +30,7 @@ class Game {
 class GameDetail {
   constructor(
     id,
+    users,
     genre,
     name,
     poster,
@@ -49,6 +50,7 @@ class GameDetail {
     artworks
   ) {
     this.id = id;
+    this.users = users;
     this.genre = genre;
     this.name = name;
     this.poster = poster;
