@@ -25,7 +25,7 @@ const GameList = ({ name, games, navigation }) => {
             <Game
               name={itemData.item.name}
               posterUrl={itemData.item.poster}
-              isCracked={itemData.item.isCracked}
+              isReleased={itemData.item.isReleased}
               onSelect={() => onSelectHandler(itemData.item.id)}
             />
           )}
