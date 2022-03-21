@@ -39,14 +39,6 @@ const defaultDrawerOptions = {
   drawerLabelStyle: {
     fontFamily: "open-sans",
   },
-
-  headerRight: () => (
-    <HeaderButton
-      iconName={Platform.OS === "android" ? "md-search" : "ios-search"}
-      iconSize={23}
-      onPress={() => {}}
-    />
-  ),
 };
 
 const DrawerNavigator = createDrawerNavigator();

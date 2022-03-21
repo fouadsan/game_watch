@@ -21,7 +21,7 @@ export const setFavorite = (gameId, token) => {
         });
         throw new Error("Something went wrong!");
       }
-
+      console.log(response.data);
       dispatch({
         type: SET_FAV_SUCCESS,
       });

@@ -8,7 +8,7 @@ export const SET_GAMES_ERROR = "SET_GAMES_ERROR";
 export const fetchGames = (userId) => {
   let url = "games/";
   if (userId) {
-    url = `games?users=${userId}/`;
+    url = `games/?users=${userId}`;
   }
 
   return async (dispatch) => {

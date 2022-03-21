@@ -10,6 +10,8 @@ import { FavGame } from "../components";
 function FavoritesScreen(props) {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
+  const userId = useSelector((state) => state.auth.user_id);
+
   const {
     games_loading: loading,
     games_error: error,
@@ -18,8 +20,6 @@ function FavoritesScreen(props) {
 
   const dispatch = useDispatch();
 
-  const userId = useSelector((state) => state.auth.user_id);
-
   const onSelectHandler = (id) => {
     props.navigation.navigate("Detail Screen", {
       gameId: id,
@@ -27,7 +27,6 @@ function FavoritesScreen(props) {
   };
 
   const loadGames = useCallback(async () => {
-    console.log("start");
     await dispatch(gamesActions.fetchGames(userId));
   }, [dispatch]);
 

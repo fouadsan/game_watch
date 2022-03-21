@@ -3,11 +3,10 @@ import React from "react";
 
 import Toast from "react-native-root-toast";
 
-const ToastCmp = ({ message, duration }) => {
-  console.log("toast");
+const ToastCmp = ({ showToast }) => {
   return (
     <View>
-      <Toast visible={true}>Thanks for subscribing!</Toast>
+      <Toast visible={showToast.is_visible}>{showToast.msg}</Toast>
     </View>
   );
 };

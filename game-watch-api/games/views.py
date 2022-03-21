@@ -72,5 +72,6 @@ class GameDetail(generics.RetrieveUpdateAPIView, UserGamePermission):
         if request.user not in self.get_object().users.all():
             self.get_object().users.add(request.user.id)
             return Response({'detail': 'User added to game'}, status=status.HTTP_200_OK)
-        self.get_object().users.remove(request.user.id)
+        else:
+            self.get_object().users.remove(request.user.id)
         return Response({'detail': 'User removed from game'}, status=status.HTTP_200_OK)

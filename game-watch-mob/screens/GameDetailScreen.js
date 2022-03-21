@@ -15,6 +15,10 @@ import {
 } from "../components";
 
 const GameDetailScreen = (props) => {
+  const [showToast, setShowToast] = useState({
+    is_visible: false,
+    msg: "",
+  });
   const [isMedia, setIsMedia] = useState(false);
   const gameId = props.route.params.gameId;
 
@@ -26,7 +30,7 @@ const GameDetailScreen = (props) => {
 
   const userId = useSelector((state) => state.auth.user_id);
 
-  const [isFav, setIsFav] = useState(userId && game.users.includes(userId));
+  const [isFav, setIsFav] = useState(false);
 
   const { fav_error, fav_success } = useSelector((state) => state.fav);
 
@@ -44,14 +48,19 @@ const GameDetailScreen = (props) => {
     if (isAuth) {
       await dispatch(favActions.setFavorite(gameId, token.access));
 
-      let toast = Toast.show("success", {
-        duration: Toast.durations.LONG,
-      });
       if (fav_success) {
         setIsFav((currState) => !currState);
-        setTimeout(function hideToast() {
-          Toast.hide(toast);
-        }, 2000);
+        if (isFav) {
+          setShowToast({
+            is_visible: true,
+            msg: "game added to favorites",
+          });
+        } else {
+          setShowToast({
+            is_visible: true,
+            msg: "game removed from favorites",
+          });
+        }
       }
     }
   };
@@ -62,6 +71,13 @@ const GameDetailScreen = (props) => {
       unsubscribe();
     };
   }, [loadGame]);
+
+  useEffect(() => {
+    const handleToast = setTimeout(() => {
+      setShowToast({ is_visible: false, msg: "" });
+    }, 2000);
+    return () => clearTimeout(handleToast);
+  }, [showToast]);
 
   if (loading) {
     return <Loading />;
@@ -98,6 +114,8 @@ const GameDetailScreen = (props) => {
             storyline={game.storyline}
           />
         )}
+        <ToastCmp showToast={showToast} />
+        {/* <Toast visible={showToast}>Thanks for subscribing!</Toast> */}
       </ScrollView>
     );
   }
