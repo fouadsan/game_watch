@@ -30,7 +30,7 @@ const GameDetailScreen = (props) => {
 
   const userId = useSelector((state) => state.auth.user_id);
 
-  const [isFav, setIsFav] = useState(false);
+  const [isFav, setIsFav] = useState(userId && game.users.includes(userId));
 
   const { fav_error, fav_success } = useSelector((state) => state.fav);
 
@@ -62,6 +62,8 @@ const GameDetailScreen = (props) => {
           });
         }
       }
+    } else {
+      props.navigation.navigate("Auth Screen");
     }
   };
 
@@ -91,7 +93,13 @@ const GameDetailScreen = (props) => {
       <ScrollView>
         <DetailHeader
           navigation={props.navigation}
-          game={game}
+          name={game.name}
+          poster={game.poster}
+          genre={game.genre}
+          platforms={game.platforms}
+          releaseDate={game.releaseDate}
+          screenshot={game.screenshots && game.screenshots[0].image}
+          rating={game.rating}
           handleFavorite={handleFavorite}
           isMedia={isMedia}
           setIsMedia={setIsMedia}

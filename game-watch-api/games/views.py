@@ -1,4 +1,3 @@
-from django.http import request
 from rest_framework import generics
 from rest_framework import pagination
 from django_filters.rest_framework import DjangoFilterBackend
@@ -6,7 +5,6 @@ from rest_framework import filters
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import permission_classes
 
 from .models import Genre, Game
 from .serializers import GenreSerializer, GameSerializer, GameDetailSerializer
@@ -28,11 +26,10 @@ class GenreList(generics.ListAPIView):
 
 
 class GameList(generics.ListAPIView):
-    # permission_classes = [permissions.IsAuthenticated]
     queryset = Game.objects.all()
     serializer_class = GameSerializer
     pagination_class = pagination.LimitOffsetPagination
-    # https://api.example.org/accounts/?limit=100&offset=400
+
     page_size = 1
     filterset_fields = ['id', 'users', 'genre', 'platforms',
                         'release_date', 'is_popular']
@@ -41,15 +38,6 @@ class GameList(generics.ListAPIView):
     search_fields = ['^name']
     ordering_fields = ['release_date, rating']
     ordering = ['release_date']
-    # ordering example http://example.com/api/users?ordering=-username
-
-    # Multiple orderings may also be specified:
-    # http://example.com/api/users?ordering=account,username
-
-    # example filtering: http://example.com/api/products?category=clothing&in_stock=True
-
-    # search_fields = ['^name']
-    # example search: http://example.com/api/users?search=russell]
 
     def get_queryset(self):
         queryset = Game.objects.all()

@@ -5,33 +5,22 @@ from django.utils.html import mark_safe
 from users.models import Account
 
 
-class Genre(models.Model):
-    options = (
-        ('horror', 'Horror'),
-        ('shooter', 'Shooter'),
-        ('adventure', 'Adventure'),
-        ('sci-fi', 'Sci-fi'),
-    )
-
-    name = models.CharField(max_length=20, choices=options,
-                            unique=True, default='horror')
+class Category(models.Model):
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        abstract = True
 
-class Platform(models.Model):
-    platform_options = (
-        ('pc', 'PC'),
-        ('playstation', 'Playstation'),
-        ('xbox', 'Xbox'),
-    )
 
-    name = models.CharField(
-        max_length=20, choices=platform_options, unique=True, default='pc')
+class Genre(Category):
+    pass
 
-    def __str__(self):
-        return self.name
+
+class Platform(Category):
+    pass
 
 
 class Image(models.Model):
@@ -49,51 +38,20 @@ class Artwork(Image):
     pass
 
 
-class Mode(models.Model):
-    mode_options = (
-        ('single-player', 'Single player'),
-        ('multiplayer', 'Multiplayer'),
-    )
-
-    name = models.CharField(max_length=20, choices=mode_options,
-                            unique=True, default=1)
-
-    def __str__(self):
-        return self.name
+class Mode(Category):
+    pass
 
 
-class Engine(models.Model):
-    name = models.CharField(max_length=20, blank=True, null=True)
-
-    def __str__(self):
-        return self.name
+class Engine(Category):
+    pass
 
 
-class PlayerPerspective(models.Model):
-    perspective_options = (
-        ('first_person', 'First person'),
-        ('third_person', 'Third person'),
-    )
-
-    name = models.CharField(max_length=20, choices=perspective_options,
-                            unique=True, default='first_person')
-
-    def __str__(self):
-        return self.name
+class PlayerPerspective(Category):
+    pass
 
 
-class Theme(models.Model):
-    theme_options = (
-        ('action', 'Action'),
-        ('comedy', 'Comedy'),
-        ('fantasy', 'Fantasy'),
-    )
-
-    name = models.CharField(max_length=100, choices=theme_options,
-                            unique=True, default='action')
-
-    def __str__(self):
-        return self.name
+class Theme(Category):
+    pass
 
 
 class Game(models.Model):
@@ -103,7 +61,7 @@ class Game(models.Model):
     )
     name = models.CharField(max_length=250)
     poster = models.ImageField(
-        upload_to="games/posters/", default='games/posters/default.jpg'
+        upload_to="games/posters/", default='games/posters/default.gif'
     )
     platforms = models.ManyToManyField(Platform)
     release_date = models.DateField(blank=True)
@@ -114,7 +72,7 @@ class Game(models.Model):
     developer = models.CharField(max_length=150, blank=True, null=True)
     publisher = models.CharField(max_length=150, blank=True, null=True)
     game_modes = models.ManyToManyField(Mode)
-    game_engines = models.ManyToManyField(Engine)
+    game_engines = models.ManyToManyField(Engine, blank=True)
     player_perspective = models.ManyToManyField(PlayerPerspective)
     themes = models.ManyToManyField(Theme)
     storyline = models.TextField(blank=True, null=True)
@@ -130,6 +88,3 @@ class Game(models.Model):
 
     def __str__(self):
         return self.name
-
-    # class Meta:
-    #     ordering = ('id', )

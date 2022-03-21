@@ -10,6 +10,7 @@ class GenreSerializer(serializers.ModelSerializer):
 
 
 class GameSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Game
         fields = ('id', 'genre', 'name', 'poster', 'platforms', 'release_date', 'is_released',
@@ -53,6 +54,9 @@ class PerspectiveSerializer(serializers.ModelSerializer):
 
 
 class GameDetailSerializer(serializers.ModelSerializer):
+    genre_name = serializers.StringRelatedField(
+        source='genre.name', read_only=True)
+    platforms = ModeSerializer(read_only=True, many=True)
     game_modes = ModeSerializer(read_only=True, many=True)
     game_engines = GameEnginesSerializer(read_only=True, many=True)
     player_perspective = PerspectiveSerializer(read_only=True, many=True)
@@ -62,6 +66,6 @@ class GameDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Game
-        fields = ('id', 'users', 'genre', 'name', 'poster', 'platforms', 'release_date', 'is_released',
+        fields = ('id', 'users', 'genre_name', 'name', 'poster', 'platforms', 'release_date', 'is_released',
                   'description', 'rating', 'developer', 'publisher', 'game_modes', 'game_engines',
                   'player_perspective', 'themes', 'storyline', 'screenshots', 'artworks', 'users')

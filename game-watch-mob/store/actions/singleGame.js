@@ -25,10 +25,10 @@ export const fetchGame = (gameId) => {
       const loadedGame = new GameDetail(
         data.id,
         data.users,
-        data.genre,
+        data.genre_name,
         data.name,
         data.poster,
-        data.platform,
+        data.platforms,
         data.release_date,
         data.is_released,
         data.description,

@@ -33,6 +33,10 @@ ALLOWED_HOSTS = ["*", "https://ced8-105-103-180-33.ngrok.io"]
 # Application definition
 
 INSTALLED_APPS = [
+    # third party apps
+    'admin_interface',
+    'colorfield',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,7 +51,11 @@ INSTALLED_APPS = [
     'django_filters',
     "corsheaders",
     "django_better_admin_arrayfield",
+    "django_cleanup.apps.CleanupConfig"
 ]
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SILENCED_SYSTEM_CHECKS = ['security.W019']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -158,7 +166,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 AUTH_USER_MODEL = "users.Account"
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,

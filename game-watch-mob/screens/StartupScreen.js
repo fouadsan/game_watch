@@ -11,7 +11,7 @@ const StartupScreen = () => {
 
   useEffect(() => {
     const tryLogin = async () => {
-      const userData = await AsyncStorage.removeItem("userData");
+      const userData = await AsyncStorage.getItem("userData");
       if (!userData) {
         // props.navigation.navigate('Auth');
         dispatch(authActions.setDidTryAL());

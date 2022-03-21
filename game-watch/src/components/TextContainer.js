@@ -10,15 +10,9 @@ function BannerText() {
       </div>
       <div className="description">
         <p>
-          Game Watch is an app where you keep track of all the games you are
-          interested in by tracking them, you can mark your playing status on
-          tracked games. It allows you to check upcoming, most popular games
-          easily filtered by the platforms of your choice, it recommends you
-          games based on the games you have tracked and you can optionally get
-          notified about the newly released games from your tracked collection
-          or selected platforms. Whats different?: you can track a series of
-          games, see your playing progress on it and get info / notifications on
-          upcoming or newly released games in that series.
+          Game Watch is a mobile application which i built for learning react
+          native, you get all informations, news about your games, you can also
+          mark your favorite ones and discover others by their genres.
         </p>
         <p>Contact: f.benayad95@gmail.com</p>
       </div>

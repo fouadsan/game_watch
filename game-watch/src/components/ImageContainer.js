@@ -17,11 +17,8 @@ function ImageContainer() {
 }
 
 const Wrapper = styled.article`
-  width: 285px;
-  height: 500px;
-  background-color: var(--clr-white-opacity);
-  border-radius: 20px;
-  box-shadow: var(--dark-shadow);
+  width: 320px;
+  height: 550px;
   animation: ${(props) => (props.show ? "bounce 10s infinite" : "none")};
 
   img {

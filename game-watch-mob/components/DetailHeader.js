@@ -18,7 +18,13 @@ import { colors } from "../utils/constants";
 
 const DetailHeader = ({
   navigation,
-  game,
+  name,
+  poster,
+  genre,
+  platforms,
+  releaseDate,
+  screenshot,
+  rating,
   handleFavorite,
   isMedia,
   setIsMedia,
@@ -30,7 +36,7 @@ const DetailHeader = ({
   return (
     <View>
       <ImageBackground
-        source={{ uri: game.screenshots && game.screenshots[0].image }}
+        source={{ uri: screenshot }}
         resizeMode="cover"
         style={styles.background}
       >
@@ -72,7 +78,7 @@ const DetailHeader = ({
         <View style={styles.headerRow}>
           <View style={styles.titleContainer}>
             <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
-              The Witcher 3: Wild Hunt Wild Hunt Wild Hunt
+              {name}
             </Text>
           </View>
 
@@ -87,7 +93,7 @@ const DetailHeader = ({
               Rating
             </Text>
             <CircularProgress
-              value={game.rating * 10}
+              value={rating * 10}
               radius={22}
               duration={2000}
               textColor={colors.text}
@@ -106,7 +112,7 @@ const DetailHeader = ({
         <View style={styles.info}>
           <View style={styles.posterContainer}>
             <Image
-              source={{ uri: game.poster }}
+              source={{ uri: poster }}
               resizeMode="stretch"
               style={styles.image}
             />
@@ -118,7 +124,7 @@ const DetailHeader = ({
                 ellipsizeMode="tail"
                 style={styles.infoText}
               >
-                Genres: Shooter, Adventure
+                Genres: {genre}
               </Text>
             </View>
             <View style={styles.row}>
@@ -127,11 +133,16 @@ const DetailHeader = ({
                 ellipsizeMode="tail"
                 style={styles.infoText}
               >
-                Platform: PC, PS3, X360, PS4
+                Platforms:{" "}
+                {platforms &&
+                  platforms.map((item) => {
+                    const { name } = item;
+                    return `${name}, `;
+                  })}
               </Text>
             </View>
             <View style={styles.row}>
-              <Text style={styles.infoText}>Release Date: 17Sep, 2013</Text>
+              <Text style={styles.infoText}>Release Date: {releaseDate}</Text>
             </View>
           </View>
         </View>
